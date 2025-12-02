@@ -3,8 +3,8 @@ import { defineConfig } from 'astro/config';
 
 // https://astro.build/config
 export default defineConfig({
-  // site: 'https://yourusername.github.io',
-  // base: '/dawonx-astro',  // Remove for local dev, add back for GitHub Pages
+  site: 'https://dawonx.github.io',
+  base: '/dawonx-site',
   i18n: {
     defaultLocale: 'en',
     locales: ['en', 'ko'],
