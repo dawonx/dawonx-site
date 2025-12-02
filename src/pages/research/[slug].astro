@@ -1,0 +1,80 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+export async function getStaticPaths() {
+  const blogEntries = await getCollection('research');
+  return blogEntries.map(entry => ({
+    params: { slug: entry.slug },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await entry.render();
+const lang = Astro.cookies.get('lang')?.value || 'en';
+---
+
+<BaseLayout title={entry.data.title}>
+    <div class="content-page">
+        <div class="post-container">
+            <aside id="toc-container" class="toc-container">
+                <button onclick="history.back()" class="back-button">← Back</button>
+            </aside>
+            <main id="post-detail">
+                <h1>{entry.data.title}</h1>
+                <Content />
+            </main>
+        </div>
+    </div>
+
+    <script>
+        // Generate TOC
+        const toc = document.getElementById('toc-container');
+        const content = document.getElementById('post-detail');
+        const headings = content.querySelectorAll('h2, h3');
+
+        if (headings.length > 0) {
+            const tocTitle = document.createElement('h3');
+            tocTitle.textContent = 'On this page';
+            tocTitle.className = 'toc-title';
+            toc.appendChild(tocTitle);
+
+            const tocList = document.createElement('ul');
+            tocList.className = 'toc-list';
+
+            headings.forEach((heading, index) => {
+                const id = `heading-${index}`;
+                heading.id = id;
+
+                const li = document.createElement('li');
+                li.className = heading.tagName.toLowerCase() === 'h3' ? 'toc-subitem' : '';
+
+                const a = document.createElement('a');
+                a.href = `#${id}`;
+                a.textContent = heading.textContent;
+                a.className = 'toc-link';
+
+                li.appendChild(a);
+                tocList.appendChild(li);
+            });
+
+            toc.appendChild(tocList);
+        }
+
+        // Scroll tracking for active TOC
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                const id = entry.target.getAttribute('id');
+                const tocLink = document.querySelector(`.toc-link[href="#${id}"]`);
+
+                if (entry.isIntersecting) {
+                    document.querySelectorAll('.toc-link').forEach(link => link.classList.remove('active'));
+                    tocLink?.classList.add('active');
+                }
+            });
+        }, { rootMargin: '-100px 0px -66%' });
+
+        headings.forEach(heading => observer.observe(heading));
+    </script>
+</BaseLayout>

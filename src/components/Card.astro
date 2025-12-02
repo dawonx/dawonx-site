@@ -1,0 +1,64 @@
+---
+import { Image } from 'astro:assets';
+
+interface Props {
+  title: string;
+  category: string;
+  subcategory?: string;
+  image?: string;
+  path: string;
+  date?: string;
+  author?: string;
+  series?: {
+    name: string;
+    order: number;
+    total: number;
+  };
+  eager?: boolean;
+}
+
+const { title, category, subcategory, image, path, date, author, series, eager = false } = Astro.props;
+const imageUrl = image || '/assets/background_img_small.png';
+---
+
+<div class="showcase-card">
+    <a href={path} class="card-link" style="text-decoration: none; color: inherit;" aria-label={`Read more about ${title}`}>
+        <div class="card-image">
+            <Image
+                src={imageUrl}
+                alt={title}
+                width={280}
+                height={280}
+                loading={eager ? "eager" : "lazy"}
+            />
+        </div>
+        <div class="card-content">
+            <div class="card-content-top">
+                <div class="card-badges">
+                    <span class="card-category">{subcategory || category}</span>
+                    {series && (
+                        <span class="series-badge">Series {series.order}/{series.total}</span>
+                    )}
+                </div>
+            </div>
+            <div class="card-content-middle">
+                <h3>{title}</h3>
+            </div>
+            <div class="card-content-bottom">
+                {(date || author) && (
+                    <div class="card-meta">
+                        {date && <span>{date}</span>}
+                        {author && <span>By {author}</span>}
+                    </div>
+                )}
+            </div>
+        </div>
+    </a>
+</div>
+
+<style>
+    .showcase-card {
+        opacity: 1;
+        transform: translateY(0);
+    }
+</style>

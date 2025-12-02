@@ -1,0 +1,154 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Card from '../components/Card.astro';
+
+const allPosts = (await getCollection('work'))
+  .filter(post => !post.id.endsWith('.ko.md'))
+  .sort((a, b) => new Date(b.data.date || '2025-01-01') - new Date(a.data.date || '2025-01-01'));
+
+const architecture = allPosts.filter(p => p.data.category === 'architecture');
+const branding = allPosts.filter(p => p.data.category === 'branding');
+const engineering = allPosts.filter(p => p.data.category === 'engineering');
+const publications = allPosts.filter(p => p.data.category === 'publications');
+const development = allPosts.filter(p => p.data.category === 'development');
+---
+
+<BaseLayout title="Work | DAWONX">
+    <div class="content-page">
+        <div class="content-container">
+            <main>
+                <div class="section-header">
+                    <h1 class="page-title">Work</h1>
+                    <div class="category-tabs">
+                        <button class="tab-btn active" data-category="all">All</button>
+                        <button class="tab-btn" data-category="architecture">Architecture</button>
+                        <button class="tab-btn" data-category="branding">Branding & Identity</button>
+                        <button class="tab-btn" data-category="engineering">Engineering</button>
+                        <button class="tab-btn" data-category="publications">Publications</button>
+                        <button class="tab-btn" data-category="development">Development</button>
+                    </div>
+                </div>
+
+                {architecture.length > 0 && (
+                    <section class="category-section" data-category="architecture">
+                        <h2 class="category-title">Architecture</h2>
+                        <div class="project-grid">
+                            {architecture.map((post, index) => (
+                                <Card
+                                    title={post.data.title}
+                                    category={post.data.category}
+                                    subcategory={post.data.subcategory}
+                                    image={post.data.image}
+                                    path={`/work/${post.slug}`}
+                                    eager={index < 6}
+                                />
+                            ))}
+                        </div>
+                    </section>
+                )}
+
+                {branding.length > 0 && (
+                    <section class="category-section" data-category="branding">
+                        <h2 class="category-title">Branding & Identity</h2>
+                        <div class="project-grid">
+                            {branding.map((post, index) => (
+                                <Card
+                                    title={post.data.title}
+                                    category={post.data.category}
+                                    subcategory={post.data.subcategory}
+                                    image={post.data.image}
+                                    path={`/work/${post.slug}`}
+                                    eager={index < 3}
+                                />
+                            ))}
+                        </div>
+                    </section>
+                )}
+
+                {engineering.length > 0 && (
+                    <section class="category-section" data-category="engineering">
+                        <h2 class="category-title">Engineering</h2>
+                        <div class="project-grid">
+                            {engineering.map((post, index) => (
+                                <Card
+                                    title={post.data.title}
+                                    category={post.data.category}
+                                    subcategory={post.data.subcategory}
+                                    image={post.data.image}
+                                    path={`/work/${post.slug}`}
+                                    eager={index < 3}
+                                />
+                            ))}
+                        </div>
+                    </section>
+                )}
+
+                {publications.length > 0 && (
+                    <section class="category-section" data-category="publications">
+                        <h2 class="category-title">Publications</h2>
+                        <div class="project-grid">
+                            {publications.map((post, index) => (
+                                <Card
+                                    title={post.data.title}
+                                    category={post.data.category}
+                                    subcategory={post.data.subcategory}
+                                    image={post.data.image}
+                                    path={`/work/${post.slug}`}
+                                    eager={index < 3}
+                                />
+                            ))}
+                        </div>
+                    </section>
+                )}
+
+                {development.length > 0 && (
+                    <section class="category-section" data-category="development">
+                        <h2 class="category-title">Development</h2>
+                        <div class="project-grid">
+                            {development.map((post, index) => (
+                                <Card
+                                    title={post.data.title}
+                                    category={post.data.category}
+                                    subcategory={post.data.subcategory}
+                                    image={post.data.image}
+                                    path={`/work/${post.slug}`}
+                                    eager={index < 3}
+                                />
+                            ))}
+                        </div>
+                    </section>
+                )}
+            </main>
+        </div>
+    </div>
+
+    <script>
+        // Category filtering for work page
+        const tabs = document.querySelectorAll('.tab-btn');
+        const sections = document.querySelectorAll('.category-section');
+
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                const category = tab.dataset.category;
+                tabs.forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+
+                let visibleSections = [];
+                sections.forEach(section => {
+                    if (category === 'all' || section.dataset.category === category) {
+                        section.style.display = 'block';
+                        visibleSections.push(section);
+                    } else {
+                        section.style.display = 'none';
+                    }
+                });
+
+                sections.forEach(s => s.style.paddingBottom = '80px');
+                if (visibleSections.length > 0) {
+                    visibleSections[visibleSections.length - 1].style.paddingBottom = '0';
+                }
+            });
+        });
+    </script>
+</BaseLayout>

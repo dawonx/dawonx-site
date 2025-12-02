@@ -1,0 +1,134 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Card from '../components/Card.astro';
+
+const allPosts = (await getCollection('research'))
+  .filter(post => !post.id.endsWith('.ko.md'))
+  .sort((a, b) => new Date(b.data.date || '2025-01-01') - new Date(a.data.date || '2025-01-01'));
+
+const crossIndustry = allPosts.filter(p => p.data.category === 'cross-industry');
+const sustainability = allPosts.filter(p => p.data.category === 'sustainability');
+const modular = allPosts.filter(p => p.data.category === 'modular');
+const fabrication = allPosts.filter(p => p.data.category === 'fabrication');
+---
+
+<BaseLayout title="Research | DAWONX">
+    <div class="content-page">
+        <div class="content-container">
+            <main>
+                <div class="section-header">
+                    <h1 class="page-title">Research</h1>
+                    <div class="category-tabs">
+                        <button class="tab-btn active" data-category="all">All</button>
+                        <button class="tab-btn" data-category="cross-industry">Cross-Industry</button>
+                        <button class="tab-btn" data-category="sustainability">Sustainability</button>
+                        <button class="tab-btn" data-category="modular">Modular Systems</button>
+                        <button class="tab-btn" data-category="fabrication">Digital Fabrication</button>
+                    </div>
+                </div>
+
+                {crossIndustry.length > 0 && (
+                    <section class="category-section" data-category="cross-industry">
+                        <h2 class="category-title">Cross-Industry</h2>
+                        <div class="project-grid">
+                            {crossIndustry.map((post, index) => (
+                                <Card
+                                    title={post.data.title}
+                                    category={post.data.category}
+                                    subcategory={post.data.subcategory}
+                                    image={post.data.image}
+                                    path={`/research/${post.slug}`}
+                                    eager={index < 6}
+                                />
+                            ))}
+                        </div>
+                    </section>
+                )}
+
+                {sustainability.length > 0 && (
+                    <section class="category-section" data-category="sustainability">
+                        <h2 class="category-title">Sustainability</h2>
+                        <div class="project-grid">
+                            {sustainability.map((post, index) => (
+                                <Card
+                                    title={post.data.title}
+                                    category={post.data.category}
+                                    subcategory={post.data.subcategory}
+                                    image={post.data.image}
+                                    path={`/research/${post.slug}`}
+                                    eager={index < 3}
+                                />
+                            ))}
+                        </div>
+                    </section>
+                )}
+
+                {modular.length > 0 && (
+                    <section class="category-section" data-category="modular">
+                        <h2 class="category-title">Modular Systems</h2>
+                        <div class="project-grid">
+                            {modular.map((post, index) => (
+                                <Card
+                                    title={post.data.title}
+                                    category={post.data.category}
+                                    subcategory={post.data.subcategory}
+                                    image={post.data.image}
+                                    path={`/research/${post.slug}`}
+                                    eager={index < 3}
+                                />
+                            ))}
+                        </div>
+                    </section>
+                )}
+
+                {fabrication.length > 0 && (
+                    <section class="category-section" data-category="fabrication">
+                        <h2 class="category-title">Digital Fabrication</h2>
+                        <div class="project-grid">
+                            {fabrication.map((post, index) => (
+                                <Card
+                                    title={post.data.title}
+                                    category={post.data.category}
+                                    subcategory={post.data.subcategory}
+                                    image={post.data.image}
+                                    path={`/research/${post.slug}`}
+                                    eager={index < 3}
+                                />
+                            ))}
+                        </div>
+                    </section>
+                )}
+            </main>
+        </div>
+    </div>
+
+    <script>
+        // Category filtering for research page
+        const tabs = document.querySelectorAll('.tab-btn');
+        const sections = document.querySelectorAll('.category-section');
+
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                const category = tab.dataset.category;
+                tabs.forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+
+                let visibleSections = [];
+                sections.forEach(section => {
+                    if (category === 'all' || section.dataset.category === category) {
+                        section.style.display = 'block';
+                        visibleSections.push(section);
+                    } else {
+                        section.style.display = 'none';
+                    }
+                });
+
+                sections.forEach(s => s.style.paddingBottom = '80px');
+                if (visibleSections.length > 0) {
+                    visibleSections[visibleSections.length - 1].style.paddingBottom = '0';
+                }
+            });
+        });
+    </script>
+</BaseLayout>

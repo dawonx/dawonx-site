@@ -1,0 +1,131 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Card from '../../components/Card.astro';
+
+const allPosts = (await getCollection('blog'))
+  .filter(post => post.id.endsWith('.ko.md'))
+  .sort((a, b) => new Date(b.data.date) - new Date(a.data.date));
+
+// Calculate series totals
+const seriesCount = {};
+allPosts.forEach(post => {
+  if (post.data.series) {
+    seriesCount[post.data.series.name] = (seriesCount[post.data.series.name] || 0) + 1;
+  }
+});
+
+// Group by category
+const computational = allPosts.filter(p => p.data.category === 'computational');
+const ai = allPosts.filter(p => p.data.category === 'ai');
+const experiments = allPosts.filter(p => p.data.category === 'experiments');
+---
+
+<BaseLayout title="Blog | DAWONX">
+    <div class="content-page">
+        <div class="content-container">
+            <main>
+                <div class="section-header">
+                    <h1 class="page-title">Blog</h1>
+                    <div class="category-tabs">
+                        <button class="tab-btn active" data-category="all">All</button>
+                        <button class="tab-btn" data-category="computational">Computational Design</button>
+                        <button class="tab-btn" data-category="ai">AI & Machine Learning</button>
+                        <button class="tab-btn" data-category="experiments">Experiments</button>
+                    </div>
+                </div>
+
+                <!-- Computational Design Section -->
+                <section class="category-section" data-category="computational">
+                    <h2 class="category-title">Computational Design</h2>
+                    <div class="project-grid">
+                        {computational.map(post => (
+                            <Card
+                                title={post.data.title_ko || post.data.title}
+                                category={post.data.category}
+                                subcategory={post.data.subcategory}
+                                image={post.data.image}
+                                path={`/ko/blog/${post.slug.replace('.ko', '')}`}
+                                date={post.data.date}
+                                series={post.data.series ? {
+                                    name: post.data.series.name,
+                                    order: post.data.series.order,
+                                    total: seriesCount[post.data.series.name]
+                                } : undefined}
+                            />
+                        ))}
+                    </div>
+                </section>
+
+                <!-- AI & Machine Learning Section -->
+                <section class="category-section" data-category="ai">
+                    <h2 class="category-title">AI & Machine Learning</h2>
+                    <div class="project-grid">
+                        {ai.map(post => (
+                            <Card
+                                title={post.data.title_ko || post.data.title}
+                                category={post.data.category}
+                                subcategory={post.data.subcategory}
+                                image={post.data.image}
+                                path={`/ko/blog/${post.slug.replace('.ko', '')}`}
+                                date={post.data.date}
+                                series={post.data.series ? {
+                                    name: post.data.series.name,
+                                    order: post.data.series.order,
+                                    total: seriesCount[post.data.series.name]
+                                } : undefined}
+                            />
+                        ))}
+                    </div>
+                </section>
+
+                <!-- Experiments Section -->
+                <section class="category-section" data-category="experiments">
+                    <h2 class="category-title">Experiments</h2>
+                    <div class="project-grid">
+                        {experiments.map(post => (
+                            <Card
+                                title={post.data.title_ko || post.data.title}
+                                category={post.data.category}
+                                subcategory={post.data.subcategory}
+                                image={post.data.image}
+                                path={`/ko/blog/${post.slug.replace('.ko', '')}`}
+                                date={post.data.date}
+                                series={post.data.series ? {
+                                    name: post.data.series.name,
+                                    order: post.data.series.order,
+                                    total: seriesCount[post.data.series.name]
+                                } : undefined}
+                            />
+                        ))}
+                    </div>
+                </section>
+            </main>
+        </div>
+    </div>
+
+    <script>
+        // Category filtering for blog page
+        const tabs = document.querySelectorAll('.tab-btn');
+        const sections = document.querySelectorAll('.category-section');
+
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                const category = tab.dataset.category;
+
+                // Update active tab
+                tabs.forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+
+                // Show/hide sections
+                sections.forEach(section => {
+                    if (category === 'all' || section.dataset.category === category) {
+                        section.style.display = 'block';
+                    } else {
+                        section.style.display = 'none';
+                    }
+                });
+            });
+        });
+    </script>
+</BaseLayout>

@@ -1,18 +1,19 @@
 ---
 import { getCollection } from 'astro:content';
-import BaseLayout from '../layouts/BaseLayout.astro';
-import Card from '../components/Card.astro';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Card from '../../components/Card.astro';
 
-// Filter out Korean versions (.ko files)
+// Filter Korean versions
 const blogPosts = (await getCollection('blog'))
-  .filter(post => !post.id.endsWith('.ko.md'))
+  .filter(post => post.id.endsWith('.ko.md'))
   .sort((a, b) => new Date(b.data.date) - new Date(a.data.date));
+
 const workPosts = (await getCollection('work'))
-  .filter(post => !post.id.endsWith('.ko.md'))
+  .filter(post => post.id.endsWith('.ko.md'))
   .sort((a, b) => new Date(b.data.date || '2025-01-01') - new Date(a.data.date || '2025-01-01'));
 
 const researchPosts = (await getCollection('research'))
-  .filter(post => !post.id.endsWith('.ko.md'))
+  .filter(post => post.id.endsWith('.ko.md'))
   .sort((a, b) => new Date(b.data.date || '2025-01-01') - new Date(a.data.date || '2025-01-01'));
 
 // Calculate series totals
@@ -24,15 +25,15 @@ blogPosts.forEach(post => {
 });
 ---
 
-<BaseLayout title="DAWONX | Computational Design for Sustainability" showGradient={true}>
+<BaseLayout title="DAWONX | 지속가능성을 위한 컴퓨테이셔널 디자인" showGradient={true}>
     <div style="flex: 1; display: flex; flex-direction: column;">
     <!-- Hero Section -->
     <main id="hero">
         <div class="hero-content">
             <div class="hero-text-wrapper">
                 <h1 class="hero-title">
-                    <span class="title-line">Designing the</span>
-                    <span class="title-line">Sustainable Future</span>
+                    <span class="title-line">지속가능한 미래를</span>
+                    <span class="title-line">디자인합니다</span>
                 </h1>
                 <span class="hero-label">Computational Designer</span>
             </div>
@@ -61,14 +62,13 @@ blogPosts.forEach(post => {
                 </svg>
             </button>
             <div class="carousel-track" id="work-carousel">
-                {workPosts.slice(0, 6).map((post, index) => (
+                {workPosts.slice(0, 6).map(post => (
                     <Card
-                        title={post.data.title}
+                        title={post.data.title_ko || post.data.title}
                         category={post.data.category}
                         subcategory={post.data.subcategory}
                         image={post.data.image}
-                        path={`/work/${post.slug}`}
-                        eager={index < 3}
+                        path={`/ko/work/${post.slug.replace('.ko', '')}`}
                     />
                 ))}
             </div>
@@ -103,11 +103,11 @@ blogPosts.forEach(post => {
             <div class="carousel-track" id="research-carousel">
                 {researchPosts.slice(0, 6).map(post => (
                     <Card
-                        title={post.data.title}
+                        title={post.data.title_ko || post.data.title}
                         category={post.data.category}
                         subcategory={post.data.subcategory}
                         image={post.data.image}
-                        path={`/research/${post.slug}`}
+                        path={`/ko/research/${post.slug.replace('.ko', '')}`}
                     />
                 ))}
             </div>
@@ -141,11 +141,11 @@ blogPosts.forEach(post => {
             <div class="carousel-track" id="blog-carousel">
                 {blogPosts.slice(0, 6).map(post => (
                     <Card
-                        title={post.data.title}
+                        title={post.data.title_ko || post.data.title}
                         category={post.data.category}
                         subcategory={post.data.subcategory}
                         image={post.data.image}
-                        path={`/blog/${post.slug}`}
+                        path={`/ko/blog/${post.slug.replace('.ko', '')}`}
                         date={post.data.date}
                         series={post.data.series ? {
                             name: post.data.series.name,
@@ -162,7 +162,6 @@ blogPosts.forEach(post => {
             </button>
         </div>
     </section>
-    </div>
 
     <script>
         // Carousel functionality
@@ -199,17 +198,14 @@ blogPosts.forEach(post => {
                     cards.forEach(card => {
                         const cardCategory = card.querySelector('.card-category')?.textContent.toLowerCase();
                         if (category === 'all' || cardCategory?.includes(category)) {
-                            card.style.visibility = 'visible';
-                            card.style.opacity = '1';
-                            card.style.position = 'relative';
+                            card.style.display = 'block';
                         } else {
-                            card.style.visibility = 'hidden';
-                            card.style.opacity = '0';
-                            card.style.position = 'absolute';
+                            card.style.display = 'none';
                         }
                     });
                 });
             });
         });
     </script>
+    </div>
 </BaseLayout>

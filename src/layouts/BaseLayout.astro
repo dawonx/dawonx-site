@@ -1,0 +1,305 @@
+---
+import "../styles/global.css";
+
+interface Props {
+    title: string;
+    description?: string;
+    showGradient?: boolean;
+}
+
+const {
+    title,
+    description = "DAWONX explores computational design to accelerate sustainability through innovative bio-architecture, material ecology, and generative design systems.",
+    showGradient = false,
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>{title}</title>
+        <meta name="description" content={description} />
+        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+        <link
+            rel="preload"
+            href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css"
+            as="style"
+            crossorigin
+        />
+        <link
+            rel="stylesheet"
+            href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css"
+            crossorigin
+        />
+    </head>
+    <body>
+        <!-- Black fade overlay -->
+        <div class="black-fade-overlay"></div>
+
+        <!-- Animated Gradient Background -->
+        {
+            showGradient && (
+                <div class="gradient-background">
+                    <div class="gradient-layer gradient-1" />
+                    <div class="gradient-layer gradient-2" />
+                    <div class="gradient-layer gradient-3" />
+                    <div class="gradient-layer gradient-4" />
+                    <div class="gradient-layer gradient-5" />
+                    <div class="blur-overlay" />
+                </div>
+            )
+        }
+
+        <!-- Site Header -->
+        <header class="site-header" id="site-header">
+            <!-- Logo -->
+            <a href="/" class="logo-placeholder" aria-label="DAWONX Home">
+                <svg
+                    width="150"
+                    height="35"
+                    viewBox="0 0 220 50"
+                    xmlns="http://www.w3.org/2000/svg"
+                    style="cursor: pointer;"
+                    role="img"
+                    aria-labelledby="logo-title"
+                >
+                    <title id="logo-title">DAWONX</title>
+                    <defs>
+                        <style>
+                            .logo-text {
+                                fill: #ffffff;
+                                font-family:
+                                    Pretendard,
+                                    -apple-system,
+                                    BlinkMacSystemFont,
+                                    "Segoe UI",
+                                    sans-serif;
+                                font-size: 40px;
+                                font-weight: 200;
+                                letter-spacing: 0.1em;
+                                user-select: none;
+                                -webkit-user-select: none;
+                            }
+                            .letter-x {
+                                transition: transform 0.5s
+                                    cubic-bezier(0.4, 0, 0.2, 1);
+                            }
+                            .letters-awon {
+                                opacity: 0;
+                                transition: opacity 0.5s
+                                    cubic-bezier(0.4, 0, 0.2, 1);
+                            }
+                            .logo-placeholder:hover .letter-x {
+                                transform: translateX(133px);
+                            }
+                            .logo-placeholder:hover .letters-awon {
+                                opacity: 1;
+                            }
+                        </style>
+                    </defs>
+                    <text x="0" y="38" class="logo-text">D</text>
+                    <text x="28" y="38" class="logo-text letters-awon"
+                        >AWON</text
+                    >
+                    <text x="28" y="38" class="logo-text letter-x">X</text>
+                </svg>
+            </a>
+
+            <div class="header-controls">
+                <!-- Language Switcher -->
+                <div class="language-switcher-header">
+                    <button class="lang-btn active" data-lang="en">EN</button>
+                    <button class="lang-btn" data-lang="ko">KO</button>
+                </div>
+
+                <!-- Menu Toggle -->
+                <div class="menu-toggle" id="menu-toggle">
+                    <div class="menu-icon">
+                        <span></span>
+                        <span></span>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Navigation Overlay -->
+        <div class="nav-overlay" id="nav-overlay">
+            <nav class="nav-fullscreen">
+                <ul>
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/mission">Mission</a></li>
+                    <li><a href="/research">Research</a></li>
+                    <li><a href="/work">Work</a></li>
+                    <li><a href="/blog">Blog</a></li>
+                    <li><a href="/contact">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+
+        <!-- Main Content -->
+        <slot />
+
+        <!-- Site Footer -->
+        <footer class="site-footer">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>DAWONX</h3>
+                    <p>Computational Design for Sustainability</p>
+                </div>
+                <div class="footer-column">
+                    <h3>Connect</h3>
+                    <a
+                        href="https://www.linkedin.com"
+                        target="_blank"
+                        rel="noopener noreferrer">LinkedIn</a
+                    >
+                    <a
+                        href="https://www.instagram.com"
+                        target="_blank"
+                        rel="noopener noreferrer">Instagram</a
+                    >
+                    <a
+                        href="https://github.com"
+                        target="_blank"
+                        rel="noopener noreferrer">GitHub</a
+                    >
+                </div>
+                <div class="footer-column">
+                    <h3>Explore</h3>
+                    <a href="/work">Work</a>
+                    <a href="/research">Research</a>
+                    <a href="/blog">Blog</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2025 DAWONX. All rights reserved.</p>
+            </div>
+        </footer>
+
+        <script>
+            // Detect current language from URL
+            const currentPath = window.location.pathname;
+            const isKorean =
+                currentPath.startsWith("/ko/") || currentPath === "/ko";
+            const currentLang = isKorean ? "ko" : "en";
+
+            const initLanguage = () => {
+                const langButtons = document.querySelectorAll(".lang-btn");
+                langButtons.forEach((btn) => {
+                    if (btn.getAttribute("data-lang") === currentLang) {
+                        btn.classList.add("active");
+                    } else {
+                        btn.classList.remove("active");
+                    }
+                });
+            };
+
+            const setupLanguageSwitcher = () => {
+                const langButtons = document.querySelectorAll(".lang-btn");
+                langButtons.forEach((btn) => {
+                    btn.addEventListener("click", () => {
+                        const targetLang = btn.getAttribute("data-lang");
+                        if (targetLang && targetLang !== currentLang) {
+                            let newPath;
+                            if (targetLang === "ko") {
+                                // Switch to Korean
+                                if (currentPath === "/" || currentPath === "") {
+                                    newPath = "/ko";
+                                } else {
+                                    newPath = "/ko" + currentPath;
+                                }
+                            } else {
+                                // Switch to English
+                                newPath = currentPath.replace("/ko", "") || "/";
+                            }
+                            window.location.href = newPath;
+                        }
+                    });
+                });
+            };
+
+            // Get header elements
+            const menuToggle = document.getElementById("menu-toggle");
+            const navOverlay = document.getElementById("nav-overlay");
+            const logo = document.querySelector(".logo-placeholder");
+            const langSwitcher = document.querySelector(
+                ".language-switcher-header",
+            );
+
+            // Menu toggle
+            menuToggle?.addEventListener("click", () => {
+                navOverlay?.classList.toggle("active");
+                menuToggle.classList.toggle("active");
+            });
+
+            // Card scroll animation
+            const observeCards = () => {
+                const cards = document.querySelectorAll(".showcase-card");
+
+                const observer = new IntersectionObserver(
+                    (entries) => {
+                        entries.forEach((entry) => {
+                            if (
+                                entry.isIntersecting &&
+                                !entry.target.classList.contains("in-view")
+                            ) {
+                                entry.target.classList.add("in-view");
+                                // Stop observing once the card is visible
+                                observer.unobserve(entry.target);
+                            }
+                        });
+                    },
+                    {
+                        threshold: 0,
+                        rootMargin: "200px 0px 200px 0px", // Load 200px before entering viewport
+                    },
+                );
+
+                // Only observe cards that don't already have in-view class
+                cards.forEach((card) => {
+                    if (!card.classList.contains("in-view")) {
+                        observer.observe(card);
+                    }
+                });
+            };
+
+            // Header scroll effect - sticky header
+            const handleScroll = () => {
+                const scrollTop =
+                    window.pageYOffset || document.documentElement.scrollTop;
+                const header = document.getElementById("site-header");
+
+                if (header) {
+                    if (scrollTop > 50) {
+                        header.classList.add("scrolled");
+                    } else {
+                        header.classList.remove("scrolled");
+                    }
+                }
+            };
+
+            // Initialize immediately and on page load
+            const init = () => {
+                initLanguage();
+                setupLanguageSwitcher();
+                observeCards();
+                handleScroll();
+            };
+
+            // Run on DOMContentLoaded
+            if (document.readyState === "loading") {
+                document.addEventListener("DOMContentLoaded", init);
+            } else {
+                init();
+            }
+
+            // Also run on Astro page transitions
+            document.addEventListener("astro:page-load", init);
+
+            // Add scroll listener
+            window.addEventListener("scroll", handleScroll, { passive: true });
+        </script>
+    </body>
+</html>

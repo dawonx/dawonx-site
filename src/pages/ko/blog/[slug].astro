@@ -1,0 +1,93 @@
+---
+import { getCollection } from 'astro:content';
+import { Image } from 'astro:assets';
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+
+export async function getStaticPaths() {
+  const blogPosts = await getCollection('blog');
+  const koPosts = blogPosts.filter(post => post.id.endsWith('.ko.md'));
+
+  return koPosts.map(post => ({
+    params: { slug: post.id.replace('.ko.md', '.md').replace('.md', '') },
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props;
+const { Content } = await post.render();
+---
+
+<BaseLayout title={`${post.data.title_ko || post.data.title} | DAWONX`}>
+    <div class="content-page">
+        <div class="post-container">
+            <aside id="toc-container" class="toc-container">
+                <button onclick="history.back()" class="back-button">← 블로그로 돌아가기</button>
+            </aside>
+            <main id="post-detail">
+                {post.data.image && (
+                    <div class="post-featured-image">
+                        <img
+                            src={post.data.image}
+                            alt={post.data.title_ko || post.data.title}
+                            width="1200"
+                            height="630"
+                            loading="eager"
+                        />
+                    </div>
+                )}
+                <h1>{post.data.title_ko || post.data.title}</h1>
+                <Content />
+            </main>
+        </div>
+    </div>
+
+    <script>
+        // Generate TOC
+        const toc = document.getElementById('toc-container');
+        const content = document.getElementById('post-detail');
+        const headings = content.querySelectorAll('h2, h3');
+
+        if (headings.length > 0) {
+            const tocTitle = document.createElement('h3');
+            tocTitle.textContent = '목차';
+            tocTitle.className = 'toc-title';
+            toc.appendChild(tocTitle);
+
+            const tocList = document.createElement('ul');
+            tocList.className = 'toc-list';
+
+            headings.forEach((heading, index) => {
+                const id = `heading-${index}`;
+                heading.id = id;
+
+                const li = document.createElement('li');
+                li.className = heading.tagName.toLowerCase() === 'h3' ? 'toc-subitem' : '';
+
+                const a = document.createElement('a');
+                a.href = `#${id}`;
+                a.textContent = heading.textContent;
+                a.className = 'toc-link';
+
+                li.appendChild(a);
+                tocList.appendChild(li);
+            });
+
+            toc.appendChild(tocList);
+        }
+
+        // Scroll tracking for active TOC
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                const id = entry.target.getAttribute('id');
+                const tocLink = document.querySelector(`.toc-link[href="#${id}"]`);
+
+                if (entry.isIntersecting) {
+                    document.querySelectorAll('.toc-link').forEach(link => link.classList.remove('active'));
+                    tocLink?.classList.add('active');
+                }
+            });
+        }, { rootMargin: '-100px 0px -66%' });
+
+        headings.forEach(heading => observer.observe(heading));
+    </script>
+</BaseLayout>

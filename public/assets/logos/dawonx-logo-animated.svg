@@ -1,0 +1,47 @@
+<svg width="220" height="50" viewBox="0 0 220 50" xmlns="http://www.w3.org/2000/svg" style="cursor: pointer;">
+  <defs>
+    <style>
+      /* Base styles */
+      .logo-text {
+        fill: #ffffff;
+        font-family: Pretendard, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        font-size: 40px;
+        font-weight: 200;
+        letter-spacing: 0.1em;
+        user-select: none;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+      }
+      
+      /* X letter that moves */
+      .letter-x {
+        transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+      
+      /* AWON letters that fade in */
+      .letters-awon {
+        opacity: 0;
+        transition: opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+      
+      /* Hover states */
+      svg:hover .letter-x {
+        transform: translateX(130px);
+      }
+      
+      svg:hover .letters-awon {
+        opacity: 1;
+      }
+    </style>
+  </defs>
+  
+  <!-- D (always visible) -->
+  <text x="0" y="38" class="logo-text">D</text>
+  
+  <!-- AWON (hidden initially, appears on hover) -->
+  <text x="28" y="38" class="logo-text letters-awon">AWON</text>
+  
+  <!-- X (slides to the right on hover) -->
+  <text x="28" y="38" class="logo-text letter-x">X</text>
+</svg>

@@ -1,0 +1,134 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Card from '../../components/Card.astro';
+
+const allPosts = (await getCollection('research'))
+  .filter(post => post.id.endsWith('.ko.md'))
+  .sort((a, b) => new Date(b.data.date || '2025-01-01') - new Date(a.data.date || '2025-01-01'));
+
+const crossIndustry = allPosts.filter(p => p.data.category === 'cross-industry');
+const sustainability = allPosts.filter(p => p.data.category === 'sustainability');
+const modular = allPosts.filter(p => p.data.category === 'modular');
+const fabrication = allPosts.filter(p => p.data.category === 'fabrication');
+---
+
+<BaseLayout title="연구 | DAWONX">
+    <div class="content-page">
+        <div class="content-container">
+            <main>
+                <div class="section-header">
+                    <h1 class="page-title">Research</h1>
+                    <div class="category-tabs">
+                        <button class="tab-btn active" data-category="all">전체</button>
+                        <button class="tab-btn" data-category="cross-industry">융복합</button>
+                        <button class="tab-btn" data-category="sustainability">지속가능성</button>
+                        <button class="tab-btn" data-category="modular">모듈러 시스템</button>
+                        <button class="tab-btn" data-category="fabrication">디지털 패브리케이션</button>
+                    </div>
+                </div>
+
+                {crossIndustry.length > 0 && (
+                    <section class="category-section" data-category="cross-industry">
+                        <h2 class="category-title">융복합</h2>
+                        <div class="project-grid">
+                            {crossIndustry.map((post, index) => (
+                                <Card
+                                    title={post.data.title}
+                                    category={post.data.category}
+                                    subcategory={post.data.subcategory}
+                                    image={post.data.image}
+                                    path={`/ko/research/${post.slug.replace('.ko', '')}`}
+                                    eager={index < 6}
+                                />
+                            ))}
+                        </div>
+                    </section>
+                )}
+
+                {sustainability.length > 0 && (
+                    <section class="category-section" data-category="sustainability">
+                        <h2 class="category-title">지속가능성</h2>
+                        <div class="project-grid">
+                            {sustainability.map((post, index) => (
+                                <Card
+                                    title={post.data.title}
+                                    category={post.data.category}
+                                    subcategory={post.data.subcategory}
+                                    image={post.data.image}
+                                    path={`/ko/research/${post.slug.replace('.ko', '')}`}
+                                    eager={index < 3}
+                                />
+                            ))}
+                        </div>
+                    </section>
+                )}
+
+                {modular.length > 0 && (
+                    <section class="category-section" data-category="modular">
+                        <h2 class="category-title">모듈러 시스템</h2>
+                        <div class="project-grid">
+                            {modular.map((post, index) => (
+                                <Card
+                                    title={post.data.title}
+                                    category={post.data.category}
+                                    subcategory={post.data.subcategory}
+                                    image={post.data.image}
+                                    path={`/ko/research/${post.slug.replace('.ko', '')}`}
+                                    eager={index < 3}
+                                />
+                            ))}
+                        </div>
+                    </section>
+                )}
+
+                {fabrication.length > 0 && (
+                    <section class="category-section" data-category="fabrication">
+                        <h2 class="category-title">디지털 패브리케이션</h2>
+                        <div class="project-grid">
+                            {fabrication.map((post, index) => (
+                                <Card
+                                    title={post.data.title}
+                                    category={post.data.category}
+                                    subcategory={post.data.subcategory}
+                                    image={post.data.image}
+                                    path={`/ko/research/${post.slug.replace('.ko', '')}`}
+                                    eager={index < 3}
+                                />
+                            ))}
+                        </div>
+                    </section>
+                )}
+            </main>
+        </div>
+    </div>
+
+    <script>
+        // Category filtering for research page
+        const tabs = document.querySelectorAll('.tab-btn');
+        const sections = document.querySelectorAll('.category-section');
+
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                const category = tab.dataset.category;
+                tabs.forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+
+                let visibleSections = [];
+                sections.forEach(section => {
+                    if (category === 'all' || section.dataset.category === category) {
+                        section.style.display = 'block';
+                        visibleSections.push(section);
+                    } else {
+                        section.style.display = 'none';
+                    }
+                });
+
+                sections.forEach(s => s.style.paddingBottom = '80px');
+                if (visibleSections.length > 0) {
+                    visibleSections[visibleSections.length - 1].style.paddingBottom = '0';
+                }
+            });
+        });
+    </script>
+</BaseLayout>
