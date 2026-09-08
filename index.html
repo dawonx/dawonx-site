@@ -42,7 +42,7 @@
     <main id="main-content">
         <section class="portfolio-hero material-hero" id="material-hero" aria-labelledby="hero-heading">
             <img class="hero-art" id="material-image" src="assets/optimized/material-membrane-v1.webp" alt="A silver fibrous membrane forming an open, porous structure" width="1586" height="992" fetchpriority="high" decoding="async">
-            <canvas class="material-canvas" id="material-canvas" aria-hidden="true"></canvas>
+            <canvas class="material-canvas" id="material-canvas" aria-hidden="true" data-renderer="procedural-fibers"></canvas>
             <div class="hero-shade" aria-hidden="true"></div>
             <div class="hero-statement">
                 <h1 id="hero-heading">Computation into form.</h1>
@@ -87,6 +87,7 @@
 <!-- site-footer:end -->
     <script>window.basePath = './';</script>
     <script src="script.js" defer></script>
+    <script src="material-geometry.js" defer></script>
     <script src="material-motion.js" defer></script>
 </body>
 </html>
