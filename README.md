@@ -48,6 +48,8 @@ GitHub Actions builds and checks the static artifact. `main` deploys `dist/` to 
 
 Every page shares the same sticky header. Published navigation links, stylesheets and scripts carry a release version derived from the build output, so navigation after an update requests fresh pages and matching assets instead of reusing old header markup.
 
+The landing artwork uses `assets/optimized/material-membrane-v1.webp` as a static fallback and a texture for `material-motion.js`. The script deforms a 48 × 32 mesh with smoothly varying, randomly seeded noise. It is image-based motion, with no physical fiber simulation or additional rendering library. Rendering is capped at 30 fps and 1.5 million pixels. Pause/resume, reduced-motion and data-saving preferences, offscreen/hidden-page suspension, and WebGL context recovery keep navigation independent of the effect.
+
 The site currently publishes English only, with no language picker. Old Korean preferences and `?lang=ko` links do not change the displayed language. Existing `/ko/` routes redirect to the corresponding English pages, and Korean Markdown is excluded from `dist/`. Translation sources and rendering support are retained for a later relaunch. `window.basePath` keeps internal links compatible with a project subpath.
 
 The previous Astro implementation remains in Git history. The migration retains all 20 English article entries, the existing Korean article and their metadata. Existing article claims and project descriptions are preserved from the prior source; verify authorship, contribution and outcome evidence before promoting them as portfolio achievements.

@@ -9,7 +9,7 @@ const { decodeHTMLAttribute } = require('entities');
 const root = path.resolve(__dirname, '..');
 const output = path.join(root, 'dist');
 const sections = ['work', 'research', 'blog'];
-const rootFiles = ['index.html', 'work.html', 'research.html', 'blog.html', 'mission.html', 'contact.html', '404.html', 'styles.css', 'portfolio.css', 'script.js', 'favicon.svg', 'CNAME'];
+const rootFiles = ['index.html', 'work.html', 'research.html', 'blog.html', 'mission.html', 'contact.html', '404.html', 'styles.css', 'portfolio.css', 'script.js', 'material-motion.js', 'favicon.svg', 'CNAME'];
 const header = fs.readFileSync(path.join(root, 'templates/header.html'), 'utf8');
 const footer = fs.readFileSync(path.join(root, 'templates/footer.html'), 'utf8');
 

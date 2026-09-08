@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "node scripts/build-site.js && node scripts/serve.js",
     "build": "node scripts/build-site.js",
-    "check": "node --check script.js && node --check content-helper.js && node --test tests/*.test.js && node scripts/check-site.js",
+    "check": "node --check script.js && node --check material-motion.js && node --check content-helper.js && node --test tests/*.test.js && node scripts/check-site.js",
     "preview": "node scripts/serve.js",
     "content:validate": "node content-helper.js validate"
   },
