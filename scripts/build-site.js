@@ -1,9 +1,11 @@
 'use strict';
 const fs = require('node:fs');
 const path = require('node:path');
+const { createHash } = require('node:crypto');
 const { ContentHelper, escapeHTML } = require('../content-helper');
 const marked = require('../assets/vendor/marked.umd.js');
 const sanitizeHTML = require('sanitize-html');
+const { decodeHTMLAttribute } = require('entities');
 const root = path.resolve(__dirname, '..');
 const output = path.join(root, 'dist');
 const sections = ['work', 'research', 'blog'];
@@ -61,6 +63,34 @@ function redirect(relative, target) {
     const safe = escapeHTML(target);
     write(relative, `<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta http-equiv="refresh" content="0;url=${safe}"><meta name="robots" content="noindex"><title>DAWONX</title></head><body><a href="${safe}">Continue to DAWONX</a></body></html>`);
 }
+function versionURL(value, version) {
+    // Preserve native anchors, external URLs, and non-page assets.
+    if (!value || /^(?:[a-z][a-z\d+.-]*:|\/\/|#)/i.test(value)) return value;
+    const [, pathname, query = '', fragment = ''] = value.match(/^([^?#]*)(?:\?([^#]*))?(#.*)?$/);
+    if (!/(?:\.(?:html|css|js)|\/)$/i.test(pathname)) return value;
+    const params = new URLSearchParams(query);
+    params.set('v', version);
+    return `${pathname}?${params}${fragment}`;
+}
+function versionHTML(html, version) {
+    const attributeURL = value => {
+        const decoded = decodeHTMLAttribute(value);
+        const updated = versionURL(decoded, version);
+        return updated === decoded ? value : escapeHTML(updated);
+    };
+    return html.replace(/<(?:a|link|script)\b[^>]*>/gi, tag => tag.replace(/\b(href|src)="([^"]*)"/g, (match, attribute, value) => `${attribute}="${attributeURL(value)}"`))
+        .replace(/(<meta http-equiv="refresh" content="0;url=)([^"]*)/g, (match, opening, value) => opening + attributeURL(value));
+}
+function versionOutput() {
+    const files = fs.readdirSync(output, { recursive: true }).filter(file => fs.statSync(path.join(output, file)).isFile()).sort();
+    const hash = createHash('sha256');
+    for (const file of files) hash.update(file).update('\0').update(fs.readFileSync(path.join(output, file))).update('\0');
+    const version = hash.digest('hex').slice(0, 12);
+    for (const file of files.filter(file => file.endsWith('.html'))) {
+        write(file, versionHTML(fs.readFileSync(path.join(output, file), 'utf8'), version));
+    }
+    return version;
+}
 function build() {
     const helper = new ContentHelper(root);
     for (const section of sections) {
@@ -106,7 +136,8 @@ function build() {
     for (const page of ['mission', 'contact']) redirect(`${page}/index.html`, `../${page}.html`);
     redirect('ko/index.html', '../index.html');
     for (const page of ['work', 'research', 'blog', 'mission', 'contact']) redirect(`ko/${page}/index.html`, `../../${page}.html`);
-    console.log('Static site built in dist/. Articles and archive links are rendered before publication.');
+    const version = versionOutput();
+    console.log(`Static site built in dist/ (release ${version}). Articles and archive links are rendered before publication.`);
 }
 if (require.main === module) build();
-module.exports = { build, shell, articleHTML };
+module.exports = { build, shell, articleHTML, versionURL, versionHTML };

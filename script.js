@@ -2,6 +2,7 @@
     'use strict';
 
     const scriptURL = document.currentScript && document.currentScript.src;
+    const releaseVersion = scriptURL && new URL(scriptURL, document.baseURI).searchParams.get('v');
     const siteRoot = typeof window.basePath === 'string'
         ? new URL(window.basePath, document.baseURI)
         : new URL('.', scriptURL || document.baseURI);
@@ -26,6 +27,15 @@
                 return new URL(source, siteRoot.origin).href;
             }
             return new URL(source.replace(/^\/+/, ''), siteRoot).href;
+        };
+        const pageURL = value => {
+            const target = siteURL(value);
+            if (!target || !releaseVersion) return target;
+            const url = new URL(target);
+            if (url.origin === siteRoot.origin && url.pathname.startsWith(siteRoot.pathname) && /(?:\.html|\/)$/i.test(url.pathname)) {
+                url.searchParams.set('v', releaseVersion);
+            }
+            return url.href;
         };
         const statusMessage = (container, text, retry) => {
             container.replaceChildren();
@@ -71,7 +81,7 @@
             navOverlay.inert = true;
             const focusables = () => [menuToggle, ...navOverlay.querySelectorAll('a[href], button:not([disabled]), [tabindex="0"]')]
                 .filter(node => !node.hidden && node.getClientRects().length > 0);
-            const setMenu = open => {
+            const setMenu = (open, restoreFocus = true) => {
                 menuOpen = open;
                 menuToggle.classList.toggle('active', open);
                 navOverlay.classList.toggle('active', open);
@@ -88,10 +98,17 @@
                     if (firstLink) firstLink.focus();
                 } else {
                     document.body.style.overflow = previousOverflow;
-                    menuToggle.focus();
+                    if (restoreFocus) menuToggle.focus();
                 }
             };
             menuToggle.addEventListener('click', () => setMenu(!menuOpen));
+            window.matchMedia?.('(max-width: 720px)').addEventListener('change', event => {
+                if (!event.matches && menuOpen) {
+                    const focusInMenu = document.activeElement === menuToggle || navOverlay.contains(document.activeElement);
+                    setMenu(false, false);
+                    if (focusInMenu) document.querySelector('.desktop-nav a')?.focus();
+                }
+            });
             navOverlay.addEventListener('click', event => {
                 if (event.target === navOverlay || event.target.closest('a[href]')) setMenu(false);
             });
@@ -120,7 +137,7 @@
             const card = element('article', 'showcase-card in-view');
             card.dataset.category = item.category || 'uncategorized';
             const link = element('a', 'card-link');
-            link.href = siteURL(item.path) || siteURL('index.html');
+            link.href = pageURL(item.path) || pageURL('index.html');
             const imageBox = element('div', 'card-image');
             const image = element('img');
             const fallback = siteURL('assets/optimized/computational-study.webp');

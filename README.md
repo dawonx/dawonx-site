@@ -1,10 +1,10 @@
 # DAWONX
 
-A static portfolio connecting computational design, sustainability, research and industrial practice. Plain HTML, CSS and JavaScript, with Markdown for articles. No Astro, client framework or database. A single build dependency, `sanitize-html`, sanitizes article HTML before publication.
+A static portfolio connecting computational design, sustainability, research and industrial practice. Plain HTML, CSS and JavaScript, with Markdown for articles. No Astro, client framework or database. Build dependencies `sanitize-html` and `entities` sanitize article HTML and preserve URL character references during publication.
 
 ## Run locally
 
-Requires Node.js 22 or newer. Install the locked build dependency once.
+Requires Node.js 22 or newer. Install the locked build dependencies once.
 
 ```sh
 npm ci --ignore-scripts
@@ -44,7 +44,9 @@ Articles and archive links are rendered into HTML at build time so they remain r
 
 ## Deployment
 
-GitHub Actions builds and checks the static artifact. `main` deploys `dist/` to the existing GitHub Pages site at https://dawonx.com. The `codex/portfolio-refresh` branch and pull requests run validation only. The workflow installs the locked sanitizer and runs the small static build script; no Astro action is used.
+GitHub Actions builds and checks the static artifact. `main` deploys `dist/` to the existing GitHub Pages site at https://dawonx.com. The `codex/portfolio-refresh` branch and pull requests run validation only. The workflow installs the locked build dependencies and runs the small static build script; no Astro action is used.
+
+Every page shares the same sticky header. Published navigation links, stylesheets and scripts carry a release version derived from the build output, so navigation after an update requests fresh pages and matching assets instead of reusing old header markup.
 
 The site currently publishes English only, with no language picker. Old Korean preferences and `?lang=ko` links do not change the displayed language. Existing `/ko/` routes redirect to the corresponding English pages, and Korean Markdown is excluded from `dist/`. Translation sources and rendering support are retained for a later relaunch. `window.basePath` keeps internal links compatible with a project subpath.
 
