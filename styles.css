@@ -1,0 +1,52 @@
+/* Document primitives shared by the portfolio and its archive. */
+:root { --bg-color: #101211; --text-color: #f0f1ec; --primary-color: #b8e986; --font-family: Pretendard, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+html, body { margin: 0; padding: 0; background: var(--bg-color); color: var(--text-color); font-family: var(--font-family); }
+body { overflow-wrap: break-word; }
+img { max-width: 100%; }
+[hidden] { display: none !important; }
+button { cursor: pointer; }
+.menu-toggle { cursor: pointer; z-index: 1101; }
+.menu-icon { position: relative; width: 20px; height: 20px; }
+.menu-icon span { position: absolute; display: block; width: 20px; height: 1.5px; background: currentColor; }
+.menu-icon span:first-child { top: 6px; }
+.menu-icon span:last-child { bottom: 6px; }
+.menu-toggle.active .menu-icon span:first-child { transform: rotate(45deg); top: 9px; }
+.menu-toggle.active .menu-icon span:last-child { transform: rotate(-45deg); bottom: 9.5px; }
+.nav-overlay { position: fixed; inset: 0; z-index: 1000; display: flex; align-items: center; justify-content: center; overflow-y: auto; opacity: 0; }
+.nav-overlay.active { opacity: 1; }
+.nav-fullscreen ul { list-style: none; padding: 80px 24px 24px; margin: 0; text-align: center; }
+.nav-fullscreen li { margin: 12px 0; }
+.nav-fullscreen a { color: var(--text-color); text-decoration: none; font-size: clamp(24px, 6vh, 48px); }
+.nav-fullscreen a:hover { color: var(--primary-color); }
+.content-container { margin: 0 auto; }
+.content-header h1 { margin: 0 0 16px; line-height: 1.1; }
+.project-grid { display: grid; }
+.card-link { color: inherit; text-decoration: none; display: block; }
+.card-image { overflow: hidden; background: #1e241d; }
+.card-image img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.card-content-top, .card-meta { display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; color: var(--muted); font-size: 12px; }
+.card-category { text-transform: uppercase; letter-spacing: .08em; }
+.series-badge { font-size: 12px; color: var(--primary-color); }
+.card-content-middle h3 { font-size: 22px; font-weight: 450; line-height: 1.4; margin: 12px 0; }
+.card-link:hover h3 { color: var(--primary-color); }
+.card-content-bottom { margin-top: 14px; }
+.post-container { display: grid; grid-template-columns: 220px minmax(0, 1fr); gap: 64px; align-items: start; }
+.content-body { width: 100%; }
+.back-button { display: inline-block; margin-bottom: 36px; color: var(--primary-color); text-decoration: none; font-size: 14px; }
+.toc-container { position: sticky; font-size: 14px; max-height: 85vh; overflow-y: auto; }
+.toc-container h3 { margin-top: 0; font-size: 14px; font-weight: 500; }
+.toc-container ul { list-style: none; padding: 0; margin: 0; }
+.toc-container a { display: block; margin: 10px 0; line-height: 1.5; text-decoration: none; color: var(--muted); }
+.toc-container a.active, .toc-container a:hover { color: var(--primary-color); }
+#post-detail a { color: var(--primary-color); text-underline-offset: 4px; }
+#post-detail blockquote { margin: 32px 0; border-left: 2px solid var(--primary-color); padding: 4px 24px; }
+#post-detail code { font-size: .88em; font-family: ui-monospace, SFMono-Regular, Consolas, monospace; }
+#post-detail th, #post-detail td { padding: 12px; border-bottom: 1px solid var(--line); text-align: left; }
+#post-detail hr { border: 0; border-top: 1px solid var(--line); margin: 48px 0; }
+.retry-button { border: 1px solid var(--primary-color); background: transparent; color: var(--primary-color); padding: 12px 18px; }
+.mission-heading { margin-top: 60px; font-weight: 450; font-size: 28px; line-height: 1.35; }
+.mission-text { margin-top: 18px; }
+.contact-simple { max-width: 780px; margin: 64px auto 120px; text-align: center; }
+.contact-simple h2 { font-size: clamp(36px, 6vw, 72px); font-weight: 400; letter-spacing: -.04em; }
+.email-button, .contact-email { display: inline-block; color: var(--primary-color); font-size: 20px; text-underline-offset: 8px; }
+@media(max-width:1100px) { .post-container { display: block; max-width: 820px; } .toc-container { display: none; } }

@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DAWONX | Work</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="portfolio.css">
+</head>
+<body>
+<!-- site-header:start --><a class="skip-link" href="#main-content">Skip to content</a>
+<header class="site-header">
+    <a class="site-wordmark" href="./index.html" aria-label="DAWONX home">DAWON<span>X</span></a>
+    <nav class="desktop-nav" aria-label="Primary">
+        <a href="./work.html">Work</a>
+        <a href="./research.html">Research</a>
+        <a href="./blog.html">Notes</a>
+        <a href="./mission.html">About</a>
+        <a href="./contact.html">Contact ↗</a>
+    </nav>
+    <div class="header-actions">
+        <div class="language-switcher-header" aria-label="Language">
+            <button class="lang-btn active" data-lang="en" aria-pressed="true" type="button">EN</button>
+            <span aria-hidden="true">/</span>
+            <button class="lang-btn" data-lang="ko" aria-pressed="false" type="button">KO</button>
+        </div>
+        <button class="menu-toggle" id="menu-toggle" type="button" aria-label="Open navigation" aria-controls="nav-overlay" aria-expanded="false"><span class="menu-icon"><span></span><span></span></span></button>
+    </div>
+</header>
+<div class="nav-overlay" id="nav-overlay" aria-hidden="true" inert>
+    <nav class="nav-fullscreen" aria-label="Menu"><ul>
+        <li><a href="./index.html">Home</a></li>
+        <li><a href="./work.html">Work</a></li>
+        <li><a href="./research.html">Research</a></li>
+        <li><a href="./blog.html">Notes</a></li>
+        <li><a href="./mission.html">About</a></li>
+        <li><a href="./contact.html">Contact</a></li>
+    </ul></nav>
+</div>
+<!-- site-header:end -->
+<!-- Page Content -->
+    <div class="content-page" id="main-content" tabindex="-1">
+        <div class="content-container">
+            <header class="content-header">
+                <h1 data-en="Work" data-ko="작업">Work</h1>
+            </header>
+            <main>
+                <!-- Architecture Section -->
+                <section class="category-section" data-category="architecture">
+                    <h2 class="category-title">Architecture</h2>
+                    <div class="project-grid" id="work-architecture-grid">
+                        <!-- Architecture projects will be loaded here -->
+                    </div>
+                </section>
+
+                <!-- Branding & Identity Section -->
+                <section class="category-section" data-category="branding">
+                    <h2 class="category-title">Branding & Identity</h2>
+                    <div class="project-grid" id="work-branding-grid">
+                        <!-- Branding projects will be loaded here -->
+                    </div>
+                </section>
+
+                <!-- Engineering Section -->
+                <section class="category-section" data-category="engineering">
+                    <h2 class="category-title">Engineering</h2>
+                    <div class="project-grid" id="work-engineering-grid">
+                        <!-- Engineering projects will be loaded here -->
+                    </div>
+                </section>
+
+                <!-- Publications Section -->
+                <section class="category-section" data-category="publications">
+                    <h2 class="category-title">Publications</h2>
+                    <div class="project-grid" id="work-publications-grid">
+                        <!-- Publications projects will be loaded here -->
+                    </div>
+                </section>
+
+                <!-- Development Section -->
+                <section class="category-section" data-category="development">
+                    <h2 class="category-title">Development</h2>
+                    <div class="project-grid" id="work-development-grid">
+                        <!-- Development projects will be loaded here -->
+                    </div>
+                </section>
+            </main>
+        </div>
+    </div>
+
+    <!-- site-footer:start --><footer class="site-footer"><a class="site-wordmark" href="./index.html">DAWON<span>X</span></a><p>Computational design for sustainability.</p><a href="./contact.html">Get in touch ↗</a><small>© 2026 DAWONX</small></footer>
+<!-- site-footer:end -->
+
+    <script>window.basePath = './';</script>
+    <script src="script.js" defer></script>
+</body>
+</html>

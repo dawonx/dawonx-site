@@ -1,14 +1,19 @@
 {
-  "name": "dawonx-astro",
-  "type": "module",
-  "version": "0.0.1",
+  "name": "dawonx-site",
+  "version": "1.0.0",
+  "private": true,
+  "description": "DAWONX static portfolio, research archive and notes",
   "scripts": {
-    "dev": "astro dev",
-    "build": "astro build",
-    "preview": "astro preview",
-    "astro": "astro"
+    "dev": "node scripts/build-site.js && node scripts/serve.js",
+    "build": "node scripts/build-site.js",
+    "check": "node --check script.js && node --check content-helper.js && node --test tests/*.test.js && node scripts/check-site.js",
+    "preview": "node scripts/serve.js",
+    "content:validate": "node content-helper.js validate"
   },
-  "dependencies": {
-    "astro": "^5.14.1"
+  "engines": {
+    "node": ">=22"
+  },
+  "devDependencies": {
+    "sanitize-html": "2.17.7"
   }
 }

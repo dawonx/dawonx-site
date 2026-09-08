@@ -1,0 +1,74 @@
+[
+  {
+    "title": "Bio-mimetic Structures",
+    "description": "An exploration into load-bearing structures inspired by biological systems, grown through computational processes.",
+    "image": "assets/optimized/computational-study.webp",
+    "path": "work/bio-mimetic-structures/",
+    "category": "architecture",
+    "color": "#4A90E2",
+    "visibility": "public",
+    "languages": [
+      "en"
+    ]
+  },
+  {
+    "title": "Generative Material Systems",
+    "description": "Research on materials that can adapt and respond to environmental stimuli, creating self-regulating systems.",
+    "image": "assets/optimized/computational-study.webp",
+    "path": "work/generative-material-systems/",
+    "category": "engineering",
+    "color": "#50E3C2",
+    "visibility": "public",
+    "languages": [
+      "en"
+    ]
+  },
+  {
+    "title": "Data-driven Ecologies",
+    "description": "A series of installations that visualize and respond to real-time ecological data, fostering a connection with nature.",
+    "image": "assets/optimized/material-study.webp",
+    "path": "work/data-driven-ecologies/",
+    "category": "development",
+    "color": "#F5A623",
+    "visibility": "public",
+    "languages": [
+      "en"
+    ]
+  },
+  {
+    "title": "Interactive Pavilion",
+    "description": "A public installation that responds to human movement and environmental conditions.",
+    "image": "assets/optimized/computational-study.webp",
+    "path": "work/interactive-pavilion/",
+    "category": "architecture",
+    "color": "#B8E986",
+    "visibility": "public",
+    "languages": [
+      "en"
+    ]
+  },
+  {
+    "title": "3D Printed Coral Reefs",
+    "description": "A project to restore marine ecosystems using 3D printed structures that encourage coral growth.",
+    "image": "assets/optimized/material-study.webp",
+    "path": "work/3d-printed-coral-reefs/",
+    "category": "engineering",
+    "color": "#9013FE",
+    "visibility": "public",
+    "languages": [
+      "en"
+    ]
+  },
+  {
+    "title": "Living Facade",
+    "description": "A building facade integrated with a bioreactor to grow algae for biofuel and air purification.",
+    "image": "assets/optimized/computational-study.webp",
+    "path": "work/living-facade/",
+    "category": "architecture",
+    "color": "#D0021B",
+    "visibility": "public",
+    "languages": [
+      "en"
+    ]
+  }
+]

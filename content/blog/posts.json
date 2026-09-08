@@ -1,0 +1,136 @@
+[
+  {
+    "title": "Why Grasshopper Remains a Powerful Tool for Architects in the AI Era",
+    "title_ko": "AI 시대, 건축가에게 그래스호퍼가 여전히 강력한 무기인 이유",
+    "description": "Exploring why parametric design tools become even more powerful weapons in the AI era, when AI can create stunning images instantly.",
+    "description_ko": "AI가 멋진 이미지를 순식간에 만들어주는 시대, 왜 건축가는 여전히 그래스호퍼를 배워야 할까? 파라메트릭 디자인 도구가 AI 시대에 더욱 강력한 무기가 되는 이유를 탐구합니다.",
+    "image": "assets/blog/why-grasshopper-matters-in-ai-era/featured.jpg",
+    "path": "blog/why-grasshopper-matters-in-ai-era/",
+    "category": "computational",
+    "subcategory": "Parametric Design",
+    "tags": [
+      "Architecture",
+      "Artificial Intelligence",
+      "parametric design",
+      "Grasshopper",
+      "Computational Design"
+    ],
+    "date": "2025-01-15",
+    "color": "#B8E986",
+    "visibility": "public",
+    "languages": [
+      "en",
+      "ko"
+    ]
+  },
+  {
+    "title": "PyTorch Fundamentals: Building Blocks of Deep Learning",
+    "description": "Understanding tensors, autograd, and neural networks in PyTorch - Week 2 of Naver Boostcamp AI Tech.",
+    "image": "assets/optimized/computational-study.webp",
+    "path": "blog/pytorch-fundamentals/",
+    "category": "ai",
+    "subcategory": "Naver Boostcamp AI Tech",
+    "series": {
+      "name": "Naver Boostcamp AI Tech",
+      "order": 1
+    },
+    "date": "2025-01-10",
+    "color": "#FF6B6B",
+    "visibility": "public",
+    "languages": [
+      "en"
+    ]
+  },
+  {
+    "title": "The Future of Bio-Architecture",
+    "description": "A deep dive into how living materials are reshaping the way we build and live in harmony with nature.",
+    "image": "assets/optimized/computational-study.webp",
+    "path": "blog/future-of-bio-architecture/",
+    "category": "experiments",
+    "subcategory": "Material Innovation",
+    "date": "2025-01-08",
+    "color": "#6A5ACD",
+    "visibility": "public",
+    "languages": [
+      "en"
+    ]
+  },
+  {
+    "title": "Coding as a Design Tool",
+    "description": "Exploring the power of algorithms in the creative process and how they can unlock new design possibilities through computational thinking.",
+    "image": "assets/optimized/computational-study.webp",
+    "path": "blog/coding-as-a-design-tool/",
+    "category": "computational",
+    "subcategory": "Design Methodology",
+    "date": "2025-01-05",
+    "color": "#20B2AA",
+    "visibility": "public",
+    "languages": [
+      "en"
+    ]
+  },
+  {
+    "title": "Nature-Inspired Innovation",
+    "description": "How can we learn from nature to create more sustainable and resilient systems? A look into biomimicry in design and architecture.",
+    "image": "assets/optimized/material-study.webp",
+    "path": "blog/nature-inspired-innovation/",
+    "category": "experiments",
+    "subcategory": "Biomimicry",
+    "date": "2025-01-03",
+    "color": "#FFD700",
+    "visibility": "public",
+    "languages": [
+      "en"
+    ]
+  },
+  {
+    "title": "AI in Creative Processes",
+    "description": "How artificial intelligence is augmenting creativity and changing the landscape of design, from generative art to automated optimization.",
+    "image": "assets/optimized/computational-study.webp",
+    "path": "blog/ai-in-creative-processes/",
+    "category": "ai",
+    "subcategory": "Creative AI",
+    "series": {
+      "name": "AI in Design",
+      "order": 1
+    },
+    "date": "2024-12-28",
+    "color": "#4B0082",
+    "visibility": "public",
+    "languages": [
+      "en"
+    ]
+  },
+  {
+    "title": "The Ethics of Digital Fabrication",
+    "description": "A discussion on the ethical implications of advanced digital fabrication technologies and their impact on society and environment.",
+    "image": "assets/optimized/material-study.webp",
+    "path": "blog/ethics-of-digital-fabrication/",
+    "category": "experiments",
+    "subcategory": "Digital Ethics",
+    "date": "2024-12-25",
+    "color": "#8B4513",
+    "visibility": "public",
+    "languages": [
+      "en"
+    ]
+  },
+  {
+    "title": "Parametric Design Thinking",
+    "description": "Shifting from designing objects to designing systems that generate objects, exploring the paradigm of rule-based design.",
+    "image": "assets/optimized/computational-study.webp",
+    "path": "blog/parametric-design-thinking/",
+    "category": "computational",
+    "subcategory": "Design Systems",
+    "series": {
+      "name": "Parametric Design",
+      "order": 1
+    },
+    "date": "2024-12-20",
+    "color": "#556B2F",
+    "visibility": "public",
+    "languages": [
+      "en"
+    ]
+  }
+]

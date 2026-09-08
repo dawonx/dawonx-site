@@ -1,0 +1,74 @@
+[
+  {
+    "title": "Material Ecology",
+    "description": "Investigating the intersection of biology and design, aiming to create materials that are grown, not assembled.",
+    "image": "assets/optimized/computational-study.webp",
+    "path": "research/material-ecology/",
+    "category": "sustainability",
+    "color": "#7B68EE",
+    "visibility": "public",
+    "languages": [
+      "en"
+    ]
+  },
+  {
+    "title": "Computational Fabrication",
+    "description": "Developing new methods of digital fabrication that leverage computational strategies for novel material expressions.",
+    "image": "assets/optimized/material-study.webp",
+    "path": "research/computational-fabrication/",
+    "category": "fabrication",
+    "color": "#FF6347",
+    "visibility": "public",
+    "languages": [
+      "en"
+    ]
+  },
+  {
+    "title": "Synthetic Biology in Design",
+    "description": "Exploring how synthetic biology can be integrated into design processes to create living, breathing architectures.",
+    "image": "assets/optimized/computational-study.webp",
+    "path": "research/synthetic-biology-in-design/",
+    "category": "cross-industry",
+    "color": "#32CD32",
+    "visibility": "public",
+    "languages": [
+      "en"
+    ]
+  },
+  {
+    "title": "4D Printing and Smart Materials",
+    "description": "Investigating materials that can change shape and properties over time in response to stimuli.",
+    "image": "assets/optimized/computational-study.webp",
+    "path": "research/4d-printing-smart-materials/",
+    "category": "fabrication",
+    "color": "#DA70D6",
+    "visibility": "public",
+    "languages": [
+      "en"
+    ]
+  },
+  {
+    "title": "Robotic Self-Assembly",
+    "description": "Developing autonomous robotic systems that can construct complex structures.",
+    "image": "assets/optimized/material-study.webp",
+    "path": "research/robotic-self-assembly/",
+    "category": "modular",
+    "color": "#00CED1",
+    "visibility": "public",
+    "languages": [
+      "en"
+    ]
+  },
+  {
+    "title": "Urban Metabolism Studies",
+    "description": "Analyzing cities as living organisms, studying their material and energy flows.",
+    "image": "assets/optimized/computational-study.webp",
+    "path": "research/urban-metabolism-studies/",
+    "category": "sustainability",
+    "color": "#FF4500",
+    "visibility": "public",
+    "languages": [
+      "en"
+    ]
+  }
+]

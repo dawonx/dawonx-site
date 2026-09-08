@@ -1,0 +1,38 @@
+{
+  "en": {
+    "title": "My Mission",
+    "subtitle": "Empowering architects through computational tools for sustainable design",
+    "sections": [
+      {
+        "title": "Bridging Creativity & Computation",
+        "content": "I believe computational design should amplify human creativity, not replace it. By developing intuitive tools and frameworks, I help architects harness the power of algorithms while maintaining their unique design vision."
+      },
+      {
+        "title": "Democratizing Sustainable Design",
+        "content": "Advanced computational methods shouldn't be limited to elite firms. I work to make parametric design, environmental analysis, and optimization accessible to all architects committed to sustainability."
+      },
+      {
+        "title": "Cultivating Living Architecture",
+        "content": "The future of architecture lies in systems that adapt, respond, and grow with their environment. Through bio-inspired design and material innovation, I explore how buildings can become living ecosystems."
+      }
+    ]
+  },
+  "ko": {
+    "title": "나의 미션",
+    "subtitle": "지속가능한 디자인을 위한 컴퓨테이셔널 도구로 건축가에게 힘을 실어주기",
+    "sections": [
+      {
+        "title": "창의성과 계산의 연결",
+        "content": "컴퓨테이셔널 디자인은 인간의 창의성을 대체하는 것이 아니라 증폭시켜야 한다고 믿습니다. 직관적인 도구와 프레임워크를 개발함으로써, 건축가들이 고유한 디자인 비전을 유지하면서 알고리즘의 힘을 활용할 수 있도록 돕습니다."
+      },
+      {
+        "title": "지속가능한 디자인의 민주화",
+        "content": "고급 컴퓨테이셔널 방법론은 일부 엘리트 회사에만 국한되어서는 안 됩니다. 파라메트릭 디자인, 환경 분석, 최적화를 지속가능성에 헌신하는 모든 건축가가 접근할 수 있도록 만드는 일을 합니다."
+      },
+      {
+        "title": "살아있는 건축의 배양",
+        "content": "건축의 미래는 환경에 적응하고, 반응하며, 함께 성장하는 시스템에 있습니다. 생물에서 영감을 받은 디자인과 재료 혁신을 통해, 건물이 어떻게 살아있는 생태계가 될 수 있는지 탐구합니다."
+      }
+    ]
+  }
+}
