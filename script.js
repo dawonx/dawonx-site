@@ -7,14 +7,9 @@
         : new URL('.', scriptURL || document.baseURI);
 
     const init = () => {
-        const validLanguage = value => value === 'ko' ? 'ko' : 'en';
+        // Korean publication is temporarily paused. Ignore old preferences and URLs.
+        const validLanguage = () => 'en';
         let currentLang = 'en';
-        try { currentLang = validLanguage(localStorage.getItem('lang')); } catch (_) { /* Storage may be disabled. */ }
-        const requestedLanguage = new URLSearchParams(window.location.search).get('lang');
-        if (requestedLanguage === 'en' || requestedLanguage === 'ko') {
-            currentLang = requestedLanguage;
-            try { localStorage.setItem('lang', currentLang); } catch (_) { /* The URL selection still applies. */ }
-        }
 
         const element = (tag, className, text) => {
             const node = document.createElement(tag);

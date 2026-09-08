@@ -18,7 +18,7 @@ Open http://127.0.0.1:8765. After editing, run `npm run build` and refresh. `POR
 - `index.html`: curated home page.
 - `work.html`, `research.html`, `blog.html`: archive pages.
 - `content/<section>/posts.json`: public metadata, categories, language availability and image paths.
-- `content/<section>/<slug>.md`: public article text. Korean translations use `<slug>.ko.md` and `languages: ["en", "ko"]` in metadata.
+- `content/<section>/<slug>.md`: public article text. Korean translations are retained as `<slug>.ko.md` in source but are temporarily excluded from publication.
 - `templates/header.html` and `templates/footer.html`: common navigation and footer. Applied to every page during the build.
 - `content-helper.js`: shared article template and validated content creation.
 - `styles.css`: document primitives. `portfolio.css`: visual layout and responsive behavior.
@@ -46,6 +46,6 @@ Articles and archive links are rendered into HTML at build time so they remain r
 
 GitHub Actions builds and checks the static artifact. `main` deploys `dist/` to the existing GitHub Pages site at https://dawonx.com. The `codex/portfolio-refresh` branch and pull requests run validation only. The workflow installs the locked sanitizer and runs the small static build script; no Astro action is used.
 
-Existing English clean routes and Korean `/ko/` routes redirect to their corresponding static pages. A missing Korean article translation shows an explicit English fallback. `window.basePath` keeps internal links compatible with a project subpath.
+The site currently publishes English only, with no language picker. Old Korean preferences and `?lang=ko` links do not change the displayed language. Existing `/ko/` routes redirect to the corresponding English pages, and Korean Markdown is excluded from `dist/`. Translation sources and rendering support are retained for a later relaunch. `window.basePath` keeps internal links compatible with a project subpath.
 
 The previous Astro implementation remains in Git history. The migration retains all 20 English article entries, the existing Korean article and their metadata. Existing article claims and project descriptions are preserved from the prior source; verify authorship, contribution and outcome evidence before promoting them as portfolio achievements.

@@ -87,7 +87,9 @@ function build() {
     copy('assets/blog');
     write('.nojekyll', '');
     for (const section of sections) {
-        const posts = JSON.parse(fs.readFileSync(path.join(root, `content/${section}/posts.json`), 'utf8'));
+        // Keep translations in source control, but publish only the English version.
+        const posts = JSON.parse(fs.readFileSync(path.join(root, `content/${section}/posts.json`), 'utf8'))
+            .map(post => ({ ...post, languages: ['en'] }));
         write(`content/${section}/posts.json`, JSON.stringify(posts));
         for (const post of posts) {
             const slug = post.path.split('/')[1];
@@ -97,13 +99,13 @@ function build() {
             const article = helper.generateDetailPageHTML(section, slug, post.title, post.description)
                 .replace(/(<main id="post-detail"[^>]*>)[\s\S]*?<\/main>/, (match, opening) => opening.replace('aria-busy="true"', 'aria-busy="false" data-rendered-lang="en"') + body + '</main>');
             write(`${post.path}index.html`, article);
-            redirect(`ko/${post.path}index.html`, `../../../${post.path}?lang=ko`);
+            redirect(`ko/${post.path}index.html`, `../../../${post.path}`);
         }
         redirect(`${section}/index.html`, `../${section}.html`);
     }
     for (const page of ['mission', 'contact']) redirect(`${page}/index.html`, `../${page}.html`);
-    redirect('ko/index.html', '../index.html?lang=ko');
-    for (const page of ['work', 'research', 'blog', 'mission', 'contact']) redirect(`ko/${page}/index.html`, `../../${page}.html?lang=ko`);
+    redirect('ko/index.html', '../index.html');
+    for (const page of ['work', 'research', 'blog', 'mission', 'contact']) redirect(`ko/${page}/index.html`, `../../${page}.html`);
     console.log('Static site built in dist/. Articles and archive links are rendered before publication.');
 }
 if (require.main === module) build();
