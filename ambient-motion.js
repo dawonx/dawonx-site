@@ -8,6 +8,8 @@
         const connection = navigator.connection;
         let inView = false;
         let pageHidden = false;
+        let water = null;
+        let waterAttempted = false;
 
         // Choose each layer's phase once. CSS owns the animation timeline.
         hero.querySelectorAll('.ambient-layer').forEach((layer, index) => {
@@ -22,6 +24,12 @@
             const running = inView && !document.hidden && !pageHidden && !reducedMotion.matches && !connection?.saveData;
             if (running) hero.dataset.ambientRunning = '';
             else delete hero.dataset.ambientRunning;
+            if (running && !waterAttempted && globalThis.WaterSurface) {
+                waterAttempted = true;
+                const canvas = document.getElementById('water-canvas');
+                try { if (canvas) water = globalThis.WaterSurface.create(canvas, hero); } catch (_) { /* Ambient gradients remain available. */ }
+            }
+            water?.setRunning(running);
         };
         const measure = () => {
             const bounds = hero.getBoundingClientRect();

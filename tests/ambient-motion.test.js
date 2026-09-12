@@ -15,9 +15,12 @@ function fixture(options = {}) {
     const reduced = target({ matches: Boolean(options.reduced) });
     const connection = options.bareConnection ? {} : target({ saveData: Boolean(options.saveData) });
     const window = target({ innerHeight: 1000, matchMedia: () => reduced });
+    const water = { creations: 0, states: [] };
+    const WaterSurface = options.water ? { create() { water.creations++; if (options.waterFailure) throw new Error('Graphics unavailable'); return { setRunning: value => water.states.push(value) }; } } : undefined;
+    if (options.water) document.getElementById = id => id === 'ambient-hero' ? hero : {};
     if (!options.noObserver) window.IntersectionObserver = class { constructor(callback) { intersect = callback; } observe() {} };
-    vm.runInNewContext(source, { window, document, navigator: options.noConnection ? {} : { connection } });
-    return { hero, document, window, reduced, connection,
+    vm.runInNewContext(source, { window, document, WaterSurface, navigator: options.noConnection ? {} : { connection } });
+    return { hero, document, window, reduced, connection, water,
         running: () => Object.hasOwn(hero.dataset, 'ambientRunning'),
         setTop: value => { top = value; }, intersection: value => intersect([{ isIntersecting: value }]) };
 }
@@ -64,9 +67,24 @@ test('missing or partial connection APIs do not block the landing', () => {
     assert(fixture({ bareConnection: true }).running());
 });
 
+test('water shares ambient visibility and motion preferences and starts only when allowed', () => {
+    const f = fixture({ water: true, reduced: true });
+    assert.equal(f.water.creations, 0);
+    f.reduced.matches = false; f.reduced.emit('change');
+    assert.equal(f.water.creations, 1);
+    assert.equal(f.water.states.at(-1), true);
+    f.intersection(false); assert.equal(f.water.states.at(-1), false);
+    f.intersection(true); assert.equal(f.water.states.at(-1), true);
+    f.reduced.matches = true; f.reduced.emit('change');
+    assert.equal(f.water.states.at(-1), false);
+    assert.equal(f.water.creations, 1);
+    assert(fixture({ water: true, waterFailure: true }).running(), 'Graphics failures preserve ambient motion');
+});
+
 test('the landing omits motion controls and the former image and WebGL dependencies', () => {
     const html = fs.readFileSync(require.resolve('../index.html'), 'utf8');
     assert.doesNotMatch(html, /motion-toggle|Pause motion|Resume motion|material-(?:geometry|motion|canvas|membrane)/);
     assert.match(html, /class="ambient-field" aria-hidden="true"/);
     assert.match(html, /src="ambient-motion\.js" defer/);
+    assert(html.indexOf('src="water-surface.js"') < html.indexOf('src="ambient-motion.js"'));
 });
