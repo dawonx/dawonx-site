@@ -1,0 +1,4 @@
+D-DIN by Datto Inc., designed by Charles Nix (Monotype).
+Unmodified webfonts from https://github.com/amcchord/datto-d-din
+Source commit: e199c8441e758d6e492cd01ef52c3c67ba4bae26
+License: SIL Open Font License 1.1; see OFL-1.1.txt and FONTLOG.txt.

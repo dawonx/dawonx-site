@@ -124,7 +124,8 @@ original models, or confidential research. Deleting this note does not change ac
     <meta name="description" content="${escapeHTML(description)}">
     <meta name="color-scheme" content="dark">
     <link rel="icon" href="../../favicon.svg" type="image/svg+xml">
-    <link rel="stylesheet" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+    <link rel="preload" href="../../assets/vendor/d-din/D-DIN.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="../../assets/vendor/d-din/D-DIN-Bold.woff2" as="font" type="font/woff2" crossorigin>
     <link rel="stylesheet" href="../../styles.css">
     <link rel="stylesheet" href="../../portfolio.css">
 </head>

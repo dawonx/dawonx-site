@@ -8,12 +8,32 @@
         : new URL('.', scriptURL || document.baseURI);
 
     const init = () => {
-        // The home header sits over the full-window artwork, then becomes solid on scroll.
+        // Keep the artwork visible through the header until its final quarter passes underneath.
         if (document.body.classList.contains('portfolio-home')) {
-            const syncHeader = () => document.body.toggleAttribute('data-page-scrolled', window.scrollY > 24);
-            window.addEventListener('scroll', syncHeader, { passive: true });
-            window.addEventListener('pageshow', syncHeader);
-            syncHeader();
+            const hero = document.getElementById('ambient-hero');
+            const header = document.querySelector('.site-header');
+            if (hero && header) {
+                let headerFrame = 0;
+                let previousOpacity = '';
+                const syncHeader = () => {
+                    headerFrame = 0;
+                    const bounds = hero.getBoundingClientRect();
+                    const fadeDistance = Math.max(80, bounds.height * .25);
+                    const progress = Math.min(1, Math.max(0, (header.offsetHeight + fadeDistance - bounds.bottom) / fadeDistance));
+                    const opacity = (progress * progress * (3 - 2 * progress)).toFixed(3);
+                    if (opacity !== previousOpacity) {
+                        header.style.setProperty('--home-header-opacity', opacity);
+                        previousOpacity = opacity;
+                    }
+                };
+                const scheduleHeader = () => {
+                    if (!headerFrame) headerFrame = requestAnimationFrame(syncHeader);
+                };
+                window.addEventListener('scroll', scheduleHeader, { passive: true });
+                window.addEventListener('resize', scheduleHeader);
+                window.addEventListener('pageshow', scheduleHeader);
+                syncHeader();
+            }
         }
         // Korean publication is temporarily paused. Ignore old preferences and URLs.
         const validLanguage = () => 'en';
