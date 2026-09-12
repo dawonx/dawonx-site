@@ -8,6 +8,13 @@
         : new URL('.', scriptURL || document.baseURI);
 
     const init = () => {
+        // The home header sits over the full-window artwork, then becomes solid on scroll.
+        if (document.body.classList.contains('portfolio-home')) {
+            const syncHeader = () => document.body.toggleAttribute('data-page-scrolled', window.scrollY > 24);
+            window.addEventListener('scroll', syncHeader, { passive: true });
+            window.addEventListener('pageshow', syncHeader);
+            syncHeader();
+        }
         // Korean publication is temporarily paused. Ignore old preferences and URLs.
         const validLanguage = () => 'en';
         let currentLang = 'en';

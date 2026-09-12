@@ -38,6 +38,9 @@
             float aspect = u_resolution.x / max(u_resolution.y, 1.0);
             // Keep several swells visible even on portrait screens, with denser waves toward the top.
             vec2 p = vec2((uv.x - .5) * max(aspect, .85) * 12.0, uv.y * 12.0 + uv.y * uv.y * 10.0);
+            // A gentle, broad bend rounds the crossing wave fronts without folding the surface.
+            vec2 warpPhase = vec2(p.y * .35 + u_seed * .7, p.x * .28 + u_seed * 1.3);
+            p += vec2(.65, .45) * sin(warpPhase);
             vec2 slope = vec2(0.0);
             // Unequal wavelengths, directions and phases prevent a single sliding pattern.
             // Steepness is A*k, so the smallest waves contribute only fine normal detail.
@@ -45,12 +48,15 @@
             wave(slope, p, vec2(-.55, .84), .12, 5.1, u_seed * 1.37 + 1.2);
             wave(slope, p, vec2(.08, -1.0), .10, 8.9, u_seed * .73 + 2.4);
             wave(slope, p, vec2(-.96, -.29), .08, 4.3, u_seed * 1.91 + .8);
-            wave(slope, p, vec2(.7, .71), .075, 2.85, u_seed * .41 + 3.1);
-            wave(slope, p, vec2(-.81, .58), .05, 1.91, u_seed * 2.17 + 4.3);
-            wave(slope, p, vec2(.34, -.94), .028, 1.27, u_seed * 1.13 + 2.7);
-            wave(slope, p, vec2(-.2, -.98), .019, .86, u_seed * .59 + 5.2);
-            wave(slope, p, vec2(.9, -.44), .012, .58, u_seed * 1.61 + 1.7);
-            wave(slope, p, vec2(-.93, .37), .008, .39, u_seed * 2.53 + 3.8);
+            wave(slope, p, vec2(.7, .71), .055, 2.85, u_seed * .41 + 3.1);
+            wave(slope, p, vec2(-.81, .58), .030, 1.91, u_seed * 2.17 + 4.3);
+            wave(slope, p, vec2(.34, -.94), .014, 1.27, u_seed * 1.13 + 2.7);
+            wave(slope, p, vec2(-.2, -.98), .007, .86, u_seed * .59 + 5.2);
+            wave(slope, p, vec2(.9, -.44), .003, .58, u_seed * 1.61 + 1.7);
+            wave(slope, p, vec2(-.93, .37), .0015, .39, u_seed * 2.53 + 3.8);
+            // Chain-rule derivatives keep the reflected light aligned with the bent surface.
+            slope = vec2(slope.x + .126 * cos(warpPhase.y) * slope.y,
+                         slope.y + .2275 * cos(warpPhase.x) * slope.x);
 
             vec3 normal = normalize(vec3(-slope.x, 1.0, -slope.y));
             vec3 view = normalize(vec3((.5 - uv.x) * .12, .82, .44 + .35 * uv.y));
@@ -62,7 +68,7 @@
             float reflectionWeight = clamp(fresnel * 35.0, .6, 1.0);
             float reflectionPath = exp(-pow((uv.x - .67) / (.25 + .28 * (1.0 - uv.y)), 2.0));
             float sheen = pow(alignment, 18.0) * .11 * reflectionWeight;
-            float glint = pow(alignment, 32.0) * .92 * reflectionPath * reflectionWeight;
+            float glint = pow(alignment, 24.0) * .80 * reflectionPath * reflectionWeight;
             float trough = smoothstep(.02, .28, slope.y) * .55;
             float mask = smoothstep(.02, .28, uv.y) * (1.0 - smoothstep(.94, 1.0, uv.y));
             mask *= mix(.18, 1.0, smoothstep(.18, .8, uv.x));
