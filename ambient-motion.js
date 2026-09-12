@@ -11,9 +11,11 @@
 
         // Choose each layer's phase once. CSS owns the animation timeline.
         hero.querySelectorAll('.ambient-layer').forEach((layer, index) => {
-            const duration = 24 + index * 9 + Math.random() * 6;
+            const duration = 12 + index * 3 + Math.random() * 2;
             layer.style.setProperty('--ambient-duration', `${duration.toFixed(2)}s`);
-            layer.style.setProperty('--ambient-delay', `${(-Math.random() * duration * 2).toFixed(2)}s`);
+            // Start the layers between turning points so motion is visible on arrival.
+            const phase = .18 + index * .27 + Math.random() * .08;
+            layer.style.setProperty('--ambient-delay', `${(-phase * duration).toFixed(2)}s`);
         });
 
         const update = () => {
