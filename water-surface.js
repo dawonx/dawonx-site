@@ -32,22 +32,22 @@
         void main() {
             vec2 uv = v_uv;
             float aspect = u_resolution.x / max(u_resolution.y, 1.0);
-            // Compress distant ripples vertically and stretch the reflected glints along their crests.
-            vec2 p = vec2((uv.x - .5) * aspect * 5.5, uv.y * 10.0 + uv.y * uv.y * 6.0);
+            // Broad swells leave room for soft patches of reflected light.
+            vec2 p = vec2((uv.x - .5) * aspect * 3.6, uv.y * 5.5 + uv.y * uv.y * 3.0);
             vec2 slope = vec2(0.0);
             wave(slope, p, vec2(.35, 1.0), .16, 1.25, .82, u_seed);
             wave(slope, p, vec2(-.55, 1.0), .10, 1.9, -1.1, u_seed * .71);
             wave(slope, p, vec2(.75, .65), .045, 3.6, .74, 1.3);
-            wave(slope, p, vec2(-.22, 1.0), .014, 8.6, -1.35, 2.7);
-            wave(slope, p, vec2(.12, 1.0), .006, 15.6, 1.73, u_seed * .37);
-            wave(slope, p, vec2(-.08, 1.0), .002, 25.0, -1.9, 4.1);
+            wave(slope, p, vec2(-.22, 1.0), .009, 8.6, -1.35, 2.7);
+            wave(slope, p, vec2(.12, 1.0), .003, 15.6, 1.73, u_seed * .37);
+            wave(slope, p, vec2(-.08, 1.0), .0008, 25.0, -1.9, 4.1);
 
             vec3 normal = normalize(vec3(-slope.x, 1.0, -slope.y));
             vec3 halfway = normalize(vec3(.07, 1.0, .24));
             float alignment = max(dot(normal, halfway), 0.0);
-            float reflectionPath = exp(-pow((uv.x - .73) / (.13 + .22 * (1.0 - uv.y)), 2.0));
-            float sheen = pow(alignment, 18.0) * .09;
-            float glint = pow(alignment, 110.0) * .62 * reflectionPath;
+            float reflectionPath = exp(-pow((uv.x - .67) / (.25 + .28 * (1.0 - uv.y)), 2.0));
+            float sheen = pow(alignment, 12.0) * .11;
+            float glint = pow(alignment, 42.0) * .48 * reflectionPath;
             float trough = smoothstep(.08, .48, -slope.y) * .075;
             float mask = smoothstep(.02, .28, uv.y) * (1.0 - smoothstep(.94, 1.0, uv.y));
             mask *= mix(.18, 1.0, smoothstep(.18, .8, uv.x));
