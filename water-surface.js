@@ -36,8 +36,8 @@
         void main() {
             vec2 uv = v_uv;
             float aspect = u_resolution.x / max(u_resolution.y, 1.0);
-            // Broad swells leave room for soft patches of reflected light.
-            vec2 p = vec2((uv.x - .5) * aspect * 3.6, uv.y * 5.5 + uv.y * uv.y * 3.0);
+            // Keep several swells visible even on portrait screens, with denser waves toward the top.
+            vec2 p = vec2((uv.x - .5) * max(aspect, .85) * 12.0, uv.y * 12.0 + uv.y * uv.y * 10.0);
             vec2 slope = vec2(0.0);
             // Unequal wavelengths, directions and phases prevent a single sliding pattern.
             // Steepness is A*k, so the smallest waves contribute only fine normal detail.
@@ -45,8 +45,8 @@
             wave(slope, p, vec2(-.55, .84), .12, 5.1, u_seed * 1.37 + 1.2);
             wave(slope, p, vec2(.08, -1.0), .10, 8.9, u_seed * .73 + 2.4);
             wave(slope, p, vec2(-.96, -.29), .08, 4.3, u_seed * 1.91 + .8);
-            wave(slope, p, vec2(.7, .71), .055, 2.85, u_seed * .41 + 3.1);
-            wave(slope, p, vec2(-.81, .58), .04, 1.91, u_seed * 2.17 + 4.3);
+            wave(slope, p, vec2(.7, .71), .075, 2.85, u_seed * .41 + 3.1);
+            wave(slope, p, vec2(-.81, .58), .05, 1.91, u_seed * 2.17 + 4.3);
             wave(slope, p, vec2(.34, -.94), .028, 1.27, u_seed * 1.13 + 2.7);
             wave(slope, p, vec2(-.2, -.98), .019, .86, u_seed * .59 + 5.2);
             wave(slope, p, vec2(.9, -.44), .012, .58, u_seed * 1.61 + 1.7);
@@ -61,13 +61,13 @@
             // Exposure is an artistic choice for a translucent portfolio overlay.
             float reflectionWeight = clamp(fresnel * 35.0, .6, 1.0);
             float reflectionPath = exp(-pow((uv.x - .67) / (.25 + .28 * (1.0 - uv.y)), 2.0));
-            float sheen = pow(alignment, 12.0) * .19 * reflectionWeight;
-            float glint = pow(alignment, 42.0) * .92 * reflectionPath * reflectionWeight;
-            float trough = smoothstep(.08, .48, -slope.y) * .22;
+            float sheen = pow(alignment, 18.0) * .11 * reflectionWeight;
+            float glint = pow(alignment, 32.0) * .92 * reflectionPath * reflectionWeight;
+            float trough = smoothstep(.02, .28, slope.y) * .55;
             float mask = smoothstep(.02, .28, uv.y) * (1.0 - smoothstep(.94, 1.0, uv.y));
             mask *= mix(.18, 1.0, smoothstep(.18, .8, uv.x));
             // Premultiplied light over the existing CSS colour field, with no image sampling.
-            vec3 light = vec3(.035, .09, .115) * trough
+            vec3 light = vec3(.006, .018, .028) * trough
                        + vec3(.68, .88, .86) * sheen
                        + vec3(.96, .98, .83) * glint;
             float alpha = (trough + sheen + glint) * mask;

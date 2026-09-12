@@ -41,12 +41,12 @@ button { font: inherit; }
 .hero-description { max-width: 430px; font-size: 17px; line-height: 1.7; color: #d1d5cd; margin: 30px 0 0; }
 .hero-footline { border-top: 1px solid #62695b; padding-top: 22px; }
 .hero-footline a { text-decoration: none; letter-spacing: 0; font-size: 14px; }
-.ambient-hero { min-height: max(620px, calc(100svh - var(--header-height))); background: #101a20; }
-.ambient-field { position: absolute; inset: 0; z-index: -4; overflow: hidden; pointer-events: none; background: radial-gradient(ellipse at 75% 25%, #244f57, #152b37 48%, #111b22 85%); }
+.ambient-hero { min-height: max(620px, calc(100svh - var(--header-height))); background: #070e14; }
+.ambient-field { position: absolute; inset: 0; z-index: -4; overflow: hidden; pointer-events: none; background: radial-gradient(ellipse at 75% 25%, #193942, #0a1822 48%, #060d14 85%); }
 .ambient-layer { position: absolute; inset: -25%; animation-duration: var(--ambient-duration, 16s); animation-delay: var(--ambient-delay, -4s); animation-timing-function: ease-in-out; animation-iteration-count: infinite; animation-direction: alternate; animation-play-state: paused; }
-.ambient-layer-teal { background: radial-gradient(ellipse 42% 48% at 55% 50%, rgba(39,140,124,.95), rgba(36,115,109,.6) 34%, rgba(28,83,94,.2) 65%, transparent 100%); transform: rotate(-2deg) scale(1.04); animation-name: ambient-teal; }
-.ambient-layer-blue { background: radial-gradient(ellipse 43% 35% at 55% 52%, rgba(71,92,164,.85), rgba(48,84,126,.5) 42%, transparent 100%); transform: rotate(2deg) scale(1.08); animation-name: ambient-blue; }
-.ambient-layer-light { background: radial-gradient(ellipse 24% 29% at 62% 48%, rgba(170,195,127,.9), rgba(109,160,127,.4) 44%, transparent 100%); transform: scale(1.04); animation-name: ambient-light; }
+.ambient-layer-teal { background: radial-gradient(ellipse 42% 48% at 55% 50%, rgba(20,102,93,.86), rgba(14,62,66,.4) 34%, rgba(10,36,48,.16) 65%, transparent 100%); transform: rotate(-2deg) scale(1.04); animation-name: ambient-teal; }
+.ambient-layer-blue { background: radial-gradient(ellipse 43% 35% at 55% 52%, rgba(36,48,98,.7), rgba(25,40,68,.38) 42%, transparent 100%); transform: rotate(2deg) scale(1.08); animation-name: ambient-blue; }
+.ambient-layer-light { background: radial-gradient(ellipse 22% 27% at 62% 48%, rgba(144,180,132,.8), rgba(71,123,110,.25) 44%, transparent 100%); transform: scale(1.04); animation-name: ambient-light; }
 .ambient-hero[data-ambient-running] .ambient-layer { animation-play-state: running; }
 .water-canvas { position: absolute; inset: 0; z-index: -3; width: 100%; height: 100%; pointer-events: none; opacity: 0; }
 .water-canvas[data-water-ready] { opacity: 1; }
@@ -66,7 +66,7 @@ button { font: inherit; }
     50% { transform: rotate(2deg) scale(1.12); opacity: .65; }
     100% { transform: rotate(-.5deg) scale(1.04); opacity: .95; }
 }
-.ambient-hero .hero-shade { z-index: -1; background: linear-gradient(90deg, rgba(12,20,24,.62), rgba(12,20,24,.12) 62%, transparent), linear-gradient(0deg, #101211, rgba(16,18,17,.15) 38%, transparent 70%); }
+.ambient-hero .hero-shade { z-index: -1; background: linear-gradient(90deg, rgba(3,9,14,.68), rgba(3,9,14,.12) 62%, transparent), linear-gradient(0deg, #101211, rgba(6,12,17,.15) 38%, transparent 70%); }
 .ambient-hero .hero-statement { max-width: 740px; padding: 180px 0 clamp(110px, 16vh, 190px); }
 .ambient-hero .hero-statement h1 { font-size: clamp(38px, 3.6vw, 58px); font-weight: 400; letter-spacing: -.035em; line-height: 1.15; }
 .ambient-hero .hero-description { max-width: none; font-size: clamp(17px, 1.5vw, 22px); margin-top: 18px; }
