@@ -24,10 +24,14 @@
         uniform float u_time;
         uniform float u_seed;
 
-        void wave(inout vec2 slope, vec2 p, vec2 direction, float amplitude, float frequency, float speed, float phase) {
+        void wave(inout vec2 slope, vec2 p, vec2 direction, float steepness, float wavelength, float phase) {
             vec2 d = normalize(direction);
-            float angle = dot(p, d) * frequency - u_time * speed + phase;
-            slope += amplitude * frequency * cos(angle) * d;
+            float k = 6.2831853 / wavelength;
+            // Deep-water dispersion couples each wavelength and angular frequency.
+            // A shared time scale keeps relative wave speeds intact.
+            float omega = sqrt(9.81 * k);
+            float angle = dot(p, d) * k - omega * u_time * .28 + phase;
+            slope += steepness * cos(angle) * d;
         }
         void main() {
             vec2 uv = v_uv;
@@ -35,19 +39,30 @@
             // Broad swells leave room for soft patches of reflected light.
             vec2 p = vec2((uv.x - .5) * aspect * 3.6, uv.y * 5.5 + uv.y * uv.y * 3.0);
             vec2 slope = vec2(0.0);
-            wave(slope, p, vec2(.35, 1.0), .16, 1.25, .82, u_seed);
-            wave(slope, p, vec2(-.55, 1.0), .10, 1.9, -1.1, u_seed * .71);
-            wave(slope, p, vec2(.75, .65), .045, 3.6, .74, 1.3);
-            wave(slope, p, vec2(-.22, 1.0), .009, 8.6, -1.35, 2.7);
-            wave(slope, p, vec2(.12, 1.0), .003, 15.6, 1.73, u_seed * .37);
-            wave(slope, p, vec2(-.08, 1.0), .0008, 25.0, -1.9, 4.1);
+            // Unequal wavelengths, directions and phases prevent a single sliding pattern.
+            // Steepness is A*k, so the smallest waves contribute only fine normal detail.
+            wave(slope, p, vec2(.94, .34), .15, 7.3, u_seed);
+            wave(slope, p, vec2(-.55, .84), .12, 5.1, u_seed * 1.37 + 1.2);
+            wave(slope, p, vec2(.08, -1.0), .10, 8.9, u_seed * .73 + 2.4);
+            wave(slope, p, vec2(-.96, -.29), .08, 4.3, u_seed * 1.91 + .8);
+            wave(slope, p, vec2(.7, .71), .055, 2.85, u_seed * .41 + 3.1);
+            wave(slope, p, vec2(-.81, .58), .04, 1.91, u_seed * 2.17 + 4.3);
+            wave(slope, p, vec2(.34, -.94), .028, 1.27, u_seed * 1.13 + 2.7);
+            wave(slope, p, vec2(-.2, -.98), .019, .86, u_seed * .59 + 5.2);
+            wave(slope, p, vec2(.9, -.44), .012, .58, u_seed * 1.61 + 1.7);
+            wave(slope, p, vec2(-.93, .37), .008, .39, u_seed * 2.53 + 3.8);
 
             vec3 normal = normalize(vec3(-slope.x, 1.0, -slope.y));
-            vec3 halfway = normalize(vec3(.07, 1.0, .24));
+            vec3 view = normalize(vec3((.5 - uv.x) * .12, .82, .44 + .35 * uv.y));
+            vec3 sun = normalize(vec3(.2, .92, -.18));
+            vec3 halfway = normalize(view + sun);
             float alignment = max(dot(normal, halfway), 0.0);
+            float fresnel = .02037 + .97963 * pow(1.0 - max(dot(normal, view), 0.0), 5.0);
+            // Exposure is an artistic choice for a translucent portfolio overlay.
+            float reflectionWeight = clamp(fresnel * 35.0, .6, 1.0);
             float reflectionPath = exp(-pow((uv.x - .67) / (.25 + .28 * (1.0 - uv.y)), 2.0));
-            float sheen = pow(alignment, 12.0) * .11;
-            float glint = pow(alignment, 42.0) * .48 * reflectionPath;
+            float sheen = pow(alignment, 12.0) * .11 * reflectionWeight;
+            float glint = pow(alignment, 42.0) * .48 * reflectionPath * reflectionWeight;
             float trough = smoothstep(.08, .48, -slope.y) * .075;
             float mask = smoothstep(.02, .28, uv.y) * (1.0 - smoothstep(.94, 1.0, uv.y));
             mask *= mix(.18, 1.0, smoothstep(.18, .8, uv.x));
