@@ -59,6 +59,13 @@ button { font: inherit; }
 .water-canvas { position: absolute; inset: 0; z-index: -3; width: 100%; height: 100%; pointer-events: none; opacity: 0; }
 .water-canvas[data-water-ready] { opacity: 1; }
 .ambient-grain { position: absolute; inset: 0; z-index: -2; pointer-events: none; background: url('assets/optimized/ambient-grain-v3.svg') repeat; background-size: 200px 200px; opacity: .51; mix-blend-mode: soft-light; }
+/* Crossfade offset samples inside one blend layer so the grain never stacks darker. */
+.ambient-grain::after { content: ''; position: absolute; inset: 0; background: inherit; background-position: 73px 113px; opacity: 0; animation: ambient-grain-dissolve 1.8s ease-in-out infinite alternate paused; }
+.ambient-hero[data-ambient-running] .ambient-grain::after { animation-play-state: running; }
+@keyframes ambient-grain-dissolve {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
 @keyframes ambient-teal {
     0% { transform: rotate(-2deg) scale(1.02); }
     50% { transform: rotate(1deg) scale(1.09); }
