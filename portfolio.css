@@ -41,20 +41,35 @@ button { font: inherit; }
 .hero-description { max-width: 430px; font-size: 17px; line-height: 1.7; color: #d1d5cd; margin: 30px 0 0; }
 .hero-footline { border-top: 1px solid #62695b; padding-top: 22px; }
 .hero-footline a { text-decoration: none; letter-spacing: 0; font-size: 14px; }
-.material-hero { min-height: max(620px, calc(100svh - var(--header-height))); }
-.material-hero .hero-art { z-index: -4; object-position: 64% center; }
-.material-canvas { position: absolute; inset: 0; width: 100%; height: 100%; z-index: -3; pointer-events: none; opacity: 0; }
-.material-hero[data-motion-ready] .material-canvas { opacity: 1; }
-.material-hero[data-motion-ready] .hero-art { visibility: hidden; }
-.material-hero .hero-shade { background: linear-gradient(90deg, rgba(16,18,17,.3), transparent 68%), linear-gradient(0deg, rgba(16,18,17,.8), transparent 45%); }
-.material-hero .hero-statement { max-width: 740px; padding: 180px 0 clamp(110px, 16vh, 190px); }
-.material-hero .hero-statement h1 { font-size: clamp(38px, 3.6vw, 58px); font-weight: 400; letter-spacing: -.035em; line-height: 1.15; }
-.material-hero .hero-description { max-width: none; font-size: clamp(17px, 1.5vw, 22px); margin-top: 18px; }
+.ambient-hero { min-height: max(620px, calc(100svh - var(--header-height))); background: #101a20; }
+.ambient-field { position: absolute; inset: 0; z-index: -3; overflow: hidden; pointer-events: none; background: radial-gradient(ellipse at 75% 25%, #244f57, #152b37 48%, #111b22 85%); }
+.ambient-layer { position: absolute; inset: -25%; animation-duration: var(--ambient-duration, 30s); animation-delay: var(--ambient-delay, -12s); animation-timing-function: ease-in-out; animation-iteration-count: infinite; animation-direction: alternate; animation-play-state: paused; }
+.ambient-layer-teal { background: radial-gradient(ellipse 42% 48% at 65% 45%, rgba(39,140,124,.95), rgba(36,115,109,.6) 34%, rgba(28,83,94,.2) 65%, transparent 100%); transform: translate(-5%, -3%) rotate(-8deg) scale(1.05); animation-name: ambient-teal; }
+.ambient-layer-blue { background: radial-gradient(ellipse 43% 35% at 72% 64%, rgba(71,92,164,.85), rgba(48,84,126,.5) 42%, transparent 100%); transform: translate(6%, -7%) rotate(10deg); animation-name: ambient-blue; }
+.ambient-layer-light { background: radial-gradient(ellipse 28% 32% at 72% 35%, rgba(161,184,120,.82), rgba(109,160,127,.35) 44%, transparent 100%); transform: translate(-4%, 7%) scale(1.12); animation-name: ambient-light; }
+.ambient-hero[data-ambient-running] .ambient-layer { animation-play-state: running; }
+@keyframes ambient-teal {
+    0% { transform: translate(-5%, -3%) rotate(-8deg) scale(1.05); }
+    50% { transform: translate(4%, 5%) rotate(4deg) scale(1.14); }
+    100% { transform: translate(-1%, 8%) rotate(12deg) scale(1.02); }
+}
+@keyframes ambient-blue {
+    0% { transform: translate(6%, -7%) rotate(10deg); opacity: .8; }
+    50% { transform: translate(-8%, 1%) rotate(-8deg) scale(1.1); opacity: 1; }
+    100% { transform: translate(2%, 6%) rotate(-14deg) scale(1.06); opacity: .85; }
+}
+@keyframes ambient-light {
+    0% { transform: translate(-4%, 7%) scale(1.12); opacity: .9; }
+    50% { transform: translate(8%, -3%) rotate(-8deg) scale(.95); opacity: .65; }
+    100% { transform: translate(-7%, -6%) rotate(6deg) scale(1.18); opacity: 1; }
+}
+.ambient-hero .hero-shade { background: linear-gradient(90deg, rgba(12,20,24,.62), rgba(12,20,24,.12) 62%, transparent), linear-gradient(0deg, #101211, rgba(16,18,17,.15) 38%, transparent 70%); }
+.ambient-hero .hero-statement { max-width: 740px; padding: 180px 0 clamp(110px, 16vh, 190px); }
+.ambient-hero .hero-statement h1 { font-size: clamp(38px, 3.6vw, 58px); font-weight: 400; letter-spacing: -.035em; line-height: 1.15; }
+.ambient-hero .hero-description { max-width: none; font-size: clamp(17px, 1.5vw, 22px); margin-top: 18px; }
 .hero-links { display: flex; gap: 40px; margin-top: 36px; }
 .hero-links a { font-size: 16px; text-decoration: none; border-bottom: 1px solid var(--primary-color); padding: 10px 0; }
-.material-hero .hero-footline { align-items: center; min-height: 67px; padding-top: 14px; border-color: var(--line); }
-.motion-toggle { color: var(--muted); background: rgba(16,18,17,.75); border: 1px solid var(--line); min-height: 44px; padding: 8px 14px; font-size: 14px; letter-spacing: 0; }
-.motion-toggle:hover { color: var(--text-color); border-color: var(--muted); }
+.ambient-hero .hero-footline { align-items: center; min-height: 67px; padding-top: 14px; border-color: var(--line); }
 .portfolio-section { padding: 96px 4vw; border-bottom: 1px solid var(--line); }
 .section-intro { display: grid; grid-template-columns: 160px 1fr auto; align-items: baseline; gap: 24px; margin-bottom: 52px; }
 .section-index { font-size: 12px; letter-spacing: .14em; color: var(--primary-color); }
@@ -127,11 +142,11 @@ button { font: inherit; }
 }
 @media (prefers-reduced-motion: reduce) { *, *::before, *::after { scroll-behavior: auto !important; animation: none !important; transition: none !important; } }
 @media (max-width: 720px) {
-    .material-hero { min-height: max(620px, calc(100svh - var(--header-height))); }
-    .material-hero .hero-art { object-position: 60% center; }
-    .material-hero .hero-shade { background: linear-gradient(0deg, #101211 2%, rgba(16,18,17,.92) 26%, rgba(16,18,17,.18) 68%, transparent); }
-    .material-hero .hero-statement { max-width: 460px; padding: 230px 0 50px; }
-    .material-hero .hero-statement h1 { max-width: 350px; font-size: clamp(38px, 8.7vw, 52px); }
-    .material-hero .hero-description { max-width: 300px; line-height: 1.65; }
+    .ambient-hero { min-height: max(620px, calc(100svh - var(--header-height))); }
+    .ambient-field { left: -40%; right: -10%; }
+    .ambient-hero .hero-shade { background: linear-gradient(0deg, #101211 2%, rgba(16,18,17,.85) 24%, rgba(16,18,17,.1) 68%, transparent); }
+    .ambient-hero .hero-statement { max-width: 460px; padding: 230px 0 50px; }
+    .ambient-hero .hero-statement h1 { max-width: 350px; font-size: clamp(38px, 8.7vw, 52px); }
+    .ambient-hero .hero-description { max-width: 300px; line-height: 1.65; }
     .hero-links { gap: 28px; margin-top: 20px; }
 }
