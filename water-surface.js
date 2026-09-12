@@ -74,8 +74,8 @@
             mask *= mix(.18, 1.0, smoothstep(.18, .8, uv.x));
             // Premultiplied light over the existing CSS colour field, with no image sampling.
             vec3 light = vec3(.006, .018, .028) * trough
-                       + vec3(.68, .88, .86) * sheen
-                       + vec3(.96, .98, .83) * glint;
+                       + vec3(.60, .78, .76) * sheen
+                       + vec3(.85, .87, .74) * glint;
             float alpha = (trough + sheen + glint) * mask;
             // Keep stronger reflections translucent and preserve premultiplied colour.
             float limit = min(1.0, .82 / max(alpha, .0001));
