@@ -50,7 +50,7 @@ button { font: inherit; }
 .ambient-hero[data-ambient-running] .ambient-layer { animation-play-state: running; }
 .water-canvas { position: absolute; inset: 0; z-index: -3; width: 100%; height: 100%; pointer-events: none; opacity: 0; }
 .water-canvas[data-water-ready] { opacity: 1; }
-.ambient-grain { position: absolute; inset: 0; z-index: -2; pointer-events: none; background: url('assets/optimized/ambient-grain-v1.svg') repeat; background-size: 180px 180px; opacity: .3; mix-blend-mode: soft-light; }
+.ambient-grain { position: absolute; inset: 0; z-index: -2; pointer-events: none; background: url('assets/optimized/ambient-grain-v1.svg') repeat; background-size: 180px 180px; opacity: .4; mix-blend-mode: soft-light; }
 @keyframes ambient-teal {
     0% { transform: rotate(-2deg) scale(1.02); }
     50% { transform: rotate(1deg) scale(1.09); }

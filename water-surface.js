@@ -61,16 +61,19 @@
             // Exposure is an artistic choice for a translucent portfolio overlay.
             float reflectionWeight = clamp(fresnel * 35.0, .6, 1.0);
             float reflectionPath = exp(-pow((uv.x - .67) / (.25 + .28 * (1.0 - uv.y)), 2.0));
-            float sheen = pow(alignment, 12.0) * .11 * reflectionWeight;
-            float glint = pow(alignment, 42.0) * .48 * reflectionPath * reflectionWeight;
-            float trough = smoothstep(.08, .48, -slope.y) * .075;
+            float sheen = pow(alignment, 12.0) * .19 * reflectionWeight;
+            float glint = pow(alignment, 42.0) * .92 * reflectionPath * reflectionWeight;
+            float trough = smoothstep(.08, .48, -slope.y) * .22;
             float mask = smoothstep(.02, .28, uv.y) * (1.0 - smoothstep(.94, 1.0, uv.y));
             mask *= mix(.18, 1.0, smoothstep(.18, .8, uv.x));
             // Premultiplied light over the existing CSS colour field, with no image sampling.
             vec3 light = vec3(.035, .09, .115) * trough
                        + vec3(.68, .88, .86) * sheen
                        + vec3(.96, .98, .83) * glint;
-            gl_FragColor = vec4(light * mask, (trough + sheen + glint) * mask);
+            float alpha = (trough + sheen + glint) * mask;
+            // Keep stronger reflections translucent and preserve premultiplied colour.
+            float limit = min(1.0, .82 / max(alpha, .0001));
+            gl_FragColor = vec4(light * mask * limit, alpha * limit);
         }
     `;
 
