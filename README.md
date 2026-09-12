@@ -15,7 +15,7 @@ Open http://127.0.0.1:8765. After editing, run `npm run build` and refresh. `POR
 
 ## Content and shared layout
 
-- `index.html`: curated home page.
+- `index.html`: ambient introduction, selected work and a compact research list. Notes remain in the shared navigation; the shared footer provides the contact link.
 - `work.html`, `research.html`, `blog.html`: archive pages.
 - `content/<section>/posts.json`: public metadata, categories, language availability and image paths.
 - `content/<section>/<slug>.md`: public article text. Korean translations are retained as `<slug>.ko.md` in source but are temporarily excluded from publication.
